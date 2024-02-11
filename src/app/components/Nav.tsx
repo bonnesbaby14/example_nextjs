@@ -1,8 +1,26 @@
+"use client";
 import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/navigation";
+
+export default function Nav() {
+    const router = useRouter();
+
+    const logout = async () => {
+
+        const response = await fetch('/api/logout', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+
+        });
 
 
-export default function Nav(){
+        if (response.status == 200) {
+            router.push("/login");
+        } else {
+            alert("error")
+        }
+    }
 
     return (
 
@@ -14,6 +32,7 @@ export default function Nav(){
 
                 </div>
                 <Link href="/dashboard">Dashboard</Link>
+                <button onClick={() => logout()} >Cerrar sesion</button>
             </nav>
         </header>
 

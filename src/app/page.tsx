@@ -10,7 +10,7 @@ const Home = () => {
     const isAuthenticated = async () => {
       const token = localStorage.getItem("token");
 
-      if (!token) return false;
+      if (!token) return true;
 
       // const response = await fetch("/api/auth/validate-token", {
       //   headers: {
@@ -22,7 +22,7 @@ const Home = () => {
       //   return true;
       // }
 
-      return false;
+      return true;
     };
 
     // Verificar si el usuario está autenticado

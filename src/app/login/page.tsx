@@ -1,11 +1,12 @@
 'use client'
 import React, { useState } from 'react';
-
+import { useRouter } from 'next/navigation';
 const Login = () => {
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e : React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     try {
@@ -22,12 +23,13 @@ const Login = () => {
       const data = await response.json();
 
       if (data.token) {
-        // Almacenar el token en el almacenamiento local o en la sesión del navegador
-        // Redirigir al área segura del usuario o al panel de control
+        router.push('/');
       } else {
         // Mostrar un mensaje de error que indique que las credenciales son incorrectas
+        alert("datos falsos")
       }
     } catch (error) {
+      alert("error")
       // Mostrar un mensaje de error que indique que ha habido un problema con la solicitud
     }
   };

@@ -1,13 +1,14 @@
 import { NextResponse, NextRequest } from "next/server";
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import { cookies } from "next/headers";
 // import { User } from "../models"
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 
-export async function POST(req: NextRequest, res: NextResponse) {
-    console.log("hola enter aqui")
+export async function POST(req: NextRequest) {
+    let res = NextResponse.next()
 
     const { email, password } = await req.json();
 
@@ -50,6 +51,19 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const token = jwt.sign({ id: user?.id, username: user?.email, role: user?.idpersona }, "secret", {
         expiresIn: "1h",
     });
+
+
+
+
+    console.log("estoy guardando el valor en la coockie")
+
+
+    
+    cookies().set({
+        name: 'token',
+		value: token,
+		httpOnly: true,
+	});
 
     // Enviar una respuesta exitosa con el token
     return NextResponse.json({
