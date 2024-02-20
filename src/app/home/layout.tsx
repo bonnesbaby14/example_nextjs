@@ -22,7 +22,7 @@ export default function RootLayout({
 
         <div>
             <Nav />
-            <div className="flex justify-center items-center p-4 sm:ml-64">
+            <div>
                 {children}
 
             </div>
