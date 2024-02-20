@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 export async function middleware(req: NextRequest) {
 
-    await console.log("entre al midd")
+    console.log("entre al midd")
     const jwt = cookies().get("token");
 
     if (!jwt) return NextResponse.redirect(new URL("/login", req.url));

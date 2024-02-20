@@ -1,9 +1,10 @@
 'use client'
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+
 const Login = () => {
   const router = useRouter();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -13,23 +14,37 @@ const Login = () => {
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       if (!response.ok) {
-        throw new Error(`API error: ${response.statusText}`);
+
+        switch (response.status) {
+          case 404:
+            // Mostrar un mensaje de error específico para el código de estado 404
+            alert('No se encontró la página o recurso solicitado.');
+           
+            break;
+          case 401:
+            // Mostrar un mensaje de error específico para el código de estado 401 (no autorizado)
+            alert('Credenciales incorrectas o no autorizado.');
+            break;
+          // Agregar más casos según sea necesario para otros códigos de estado específicos
+          default:
+            // Mostrar un mensaje de error genérico para otros códigos de estado de error
+            throw new Error(`API error (${response.status}):`);
+        }
+        return;
       }
 
       const data = await response.json();
 
       if (data.token) {
-        router.push('/');
-      } else {
-        // Mostrar un mensaje de error que indique que las credenciales son incorrectas
-        alert("datos falsos")
-      }
+        router.push('/home');
+      } 
     } catch (error) {
-      alert("error")
+      alert("error en el sistema")
+
       // Mostrar un mensaje de error que indique que ha habido un problema con la solicitud
     }
   };
@@ -45,8 +60,8 @@ const Login = () => {
             type="text"
             placeholder="Nombre"
             className="w-full p-2 mt-1 bg-slate-950 rounded-md focus:outline-none"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 

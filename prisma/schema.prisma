@@ -10,24 +10,661 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id Int @id  @default(autoincrement())
-  name  String
-  email  String
-  email_verified_at  DateTime
-  password  String
-  remember_token  String
-  idpersona  Int
-  idcuenta  Int
-  nivel  Int
-  super  Int
-  primer_acceso  Int
-  habilitado  Int
-  activo  Int
-  created_at  DateTime
-  updated_at  DateTime
-  logged_at  DateTime
-  gratuita  Int
-  idpersona_lider  String
-  visualizador  Int
+  name  String?
+  email  String?
+  email_verified_at  DateTime?
+  password  String?
+  remember_token  String?
+  idpersona  Int?
+  idcuenta  Int?
+  nivel  Int?
+  super  Int?
+  primer_acceso  Int?
+  habilitado  Int?
+  activo  Int?
+  created_at  DateTime?
+  updated_at  DateTime?
+  logged_at  DateTime?
+  gratuita  Int?
+  idpersona_lider  String?
+  visualizador  Int?
 }
+
+model Persona {
+  idpersona           Int       @id
+  idcuenta            Int?
+  apellido_paterno    String?
+  apellido_materno    String?
+  nombre              String?
+  domicilio           String?
+  exterior            String?
+  interior            String?
+  manzana_electoral   String?
+  colonia             String?
+  municipio_estado    String?
+  edad                Int?
+  fecha_nacimiento    String?
+  sexo                String?
+  localidad           String?
+  emision             String?
+  vigencia            String?
+  curp                String?
+  clave_elector       String?
+  seccion             String?
+  estado              String?
+  municipio           String?
+  email               String?
+  numero              String?
+  facebook            String?
+  twitter             String?
+  numero_local        String?
+  nota_1              String?
+  nota_2              String?
+  escolaridad         String?
+  ocupacion           String?
+  foto_1              String?
+  foto_2              String?
+  foto_3              String?
+  foto_4              String?
+  foto_5              String?
+  foto_6              String?
+  foto_7              String?
+  foto_8              String?
+  foto_9              String?
+  foto_10             String?
+  latitud             String?
+  longitud            String?
+  idnivel1            Int?
+  idnivel2            Int?
+  idnivel3            Int?
+  idnivel4            Int?
+  idnivel5            Int?
+  idnivel6            Int?
+  idnivel7            Int?
+  idnivel8            Int?
+  created_by          Int?
+  created_at          DateTime?
+  updated_by          Int?
+  updated_at          DateTime?
+  registro_en_movil   Int      @default(0)
+  activo              Int      @default(1)
+  parametro1          String?
+  parametro2          String?
+  parametro3          String?
+  direccion           String?
+  SAC                 Int      @default(0)
+  credencial          Int      @default(0)
+  idpersona_lider     String?
+  idvalidacion        Int?
+  whatsapp            Int      @default(0)
+}
+
+model Beneficio {
+  idbeneficio      Int       @id
+  idcuenta         Int       @map("idcuenta")
+  idpersona        Int       @map("idpersona")
+  idtipo_beneficio Int       @map("idtipo_beneficio")
+  descripcion      String?   @map("descripcion")
+  cantidad         Int       @map("cantidad")
+  archivo          String?   @map("archivo")
+  activo           Int       @default(1)
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @default(now())
+  created_by       Int
+  updated_by       Int?
+}
+
+model Contacto {
+  idcontacto         Int       @id
+  nombre             String?   @map("nombre")
+  descripcion        String?   @map("descripcion")
+  estado             String?   @map("estado")
+  nivel              Int?      @map("nivel")
+  idnivel1           Int?      @map("idnivel1")
+  idnivel2           Int?      @map("idnivel2")
+  idnivel3           Int?      @map("idnivel3")
+  idnivel4           Int?      @map("idnivel4")
+  idnivel5           Int?      @map("idnivel5")
+  idnivel6           Int?      @map("idnivel6")
+  idnivel7           Int?      @map("idnivel7")
+  idnivel8           Int?      @map("idnivel8")
+  origen_idnivel1    Int?      @map("origen_idnivel1")
+  origen_idnivel2    Int?      @map("origen_idnivel2")
+  origen_idnivel3    Int?      @map("origen_idnivel3")
+  origen_idnivel4    Int?      @map("origen_idnivel4")
+  origen_idnivel5    Int?      @map("origen_idnivel5")
+  origen_idnivel6    Int?      @map("origen_idnivel6")
+  origen_idnivel7    Int?      @map("origen_idnivel7")
+  origen_idnivel8    Int?      @map("origen_idnivel8")
+  idcuenta           Int?      @map("idcuenta")
+  created_at         DateTime? @map("created_at")
+  updated_at         DateTime? @map("updated_at")
+  created_by         Int?      @map("created_by")
+  activo             Int?      @default(1) @map("activo")
+}
+
+model ContactoAsignado {
+  idcontacto_asignado      Int       @id
+  idcontacto_grupo         Int?      @map("idcontacto_grupo")
+  nombre                   String?   @map("nombre")
+  descripcion              String?   @map("descripcion")
+  nota                     String?   @map("nota")
+  estado                   String?   @map("estado")
+  idpersona                Int?      @map("idpersona")
+  idcuenta                 Int?      @map("idcuenta")
+  foto                     String?   @map("foto")
+  idpersona_completada     Int?      @map("idpersona_completada")
+  created_at               DateTime? @map("created_at")
+  updated_at               DateTime? @map("updated_at")
+  activo                   Int?      @default(1) @map("activo")
+}
+
+model ContactoGrupo {
+  idcontacto_grupo Int      @id
+  idcontacto       Int      @map("idcontacto")
+  idcuenta         Int      @map("idcuenta")
+  idnivel1         Int?     @map("idnivel1")
+  idnivel2         Int?     @map("idnivel2")
+  idnivel3         Int?     @map("idnivel3")
+  idnivel4         Int?     @map("idnivel4")
+  idnivel5         Int?     @map("idnivel5")
+  idnivel6         Int?     @map("idnivel6")
+  idnivel7         Int?     @map("idnivel7")
+  idnivel8         Int?     @map("idnivel8")
+  activo           Int      @default(1)
+  nivel            Int      @map("nivel")
+  created_at       DateTime @default(now())
+  updated_at       DateTime @default(now())
+}
+
+model ConversacionUser {
+  idconversacion_user  Int      @id
+  idconversacion       Int?     @map("idconversacion")
+  iduser               Int?     @map("iduser")
+}
+
+model Credencializacion {
+  idcredencializacion  Int      @id
+  idcuenta              Int      @map("idcuenta")
+  idgrupo               Int?     @map("idgrupo") @default(-1)
+  idpersona             Int?     @map("idpersona")
+  idpersona_lider       Int?     @map("idpersona_lider")
+  nivel                 Int      @map("nivel")
+  activo                Int      @default(1)
+  created_at            DateTime @default(now())
+  updated_at            DateTime @default(now())
+  created_by            Int?     @map("created_by")
+}
+
+model CredencializacionPersona {
+  idcredencializacion_persona Int   @id
+  idpersona                  Int   @map("idpersona")
+  idcredencializacion        Int   @map("idcredencializacion")
+  activo                      Int   @default(1)
+}
+
+model Cuenta {
+  idcuenta                    Int       @id
+  nombre                      String?   @map("nombre")
+  nivel_1                     String?   @map("nivel_1")
+  nivel_2                     String?   @map("nivel_2")
+  nivel_3                     String?   @map("nivel_3")
+  nivel_4                     String?   @map("nivel_4")
+  nivel_5                     String?   @map("nivel_5")
+  nivel_6                     String?   @map("nivel_6")
+  nivel_7                     String?   @map("nivel_7")
+  nivel_8                     String?   @map("nivel_8")
+  foto_1                      String?   @map("foto_1")
+  catalogo_1                  String?   @map("catalogo_1")
+  catalogo_2                  String?   @map("catalogo_2")
+  catalogo_3                  String?   @map("catalogo_3")
+  foto_2                      String?   @map("foto_2")
+  foto_3                      String?   @map("foto_3")
+  foto_4                      String?   @map("foto_4")
+  foto_5                      String?   @map("foto_5")
+  foto_6                      String?   @map("foto_6")
+  foto_7                      String?   @map("foto_7")
+  foto_8                      String?   @map("foto_8")
+  foto_9                      String?   @map("foto_9")
+  foto_10                     String?   @map("foto_10")
+  mensaje                     String?   @map("mensaje")
+  numero_niveles              Int      @default(5)
+  parametrizables_nivel1      Int?     @map("parametrizables_nivel1")
+  parametrizables_nivel2      Int?     @map("parametrizables_nivel2")
+  parametrizables_nivel3      Int?     @map("parametrizables_nivel3")
+  parametrizables_nivel4      Int?     @map("parametrizables_nivel4")
+  parametrizables_nivel5      Int?     @map("parametrizables_nivel5")
+  parametrizables_nivel6      Int?     @map("parametrizables_nivel6")
+  parametrizables_nivel7      Int?     @map("parametrizables_nivel7")
+  parametrizables_nivel8      Int?     @map("parametrizables_nivel8")
+  created_by                  Int?     @map("created_by")
+  created_at                  DateTime? @map("created_at")
+  updated_by                  Int?     @map("updated_by")
+  updated_at                  DateTime? @map("updated_at")
+  habilitado                  Int      @default(1)
+  fecha_limite_bloqueo        DateTime? @map("fecha_limite_bloqueo")
+  activo                      Int      @default(1)
+  habilitar_carga             Int      @default(1)
+  gratuita                    Int      @default(0)
+  lite                        Int      @default(0)
+  base_datos_SAC              String?  @map("base_datos_SAC")
+  usuario_SAC                 String?  @map("usuario_SAC")
+  idestado                    Int      @map("idestado")
+  idmunicipio                 Int      @map("idmunicipio")
+  permiso_nivel1              Int?     @map("permiso_nivel1")
+  permiso_nivel2              Int?     @map("permiso_nivel2")
+  permiso_nivel3              Int?     @map("permiso_nivel3")
+  permiso_nivel4              Int?     @map("permiso_nivel4")
+  permiso_nivel5              Int?     @map("permiso_nivel5")
+  permiso_nivel6              Int?     @map("permiso_nivel6")
+  permiso_nivel7              Int?     @map("permiso_nivel7")
+  permiso_nivel8              Int?     @map("permiso_nivel8")
+  vista_lideres               Int?      @default(0)
+  registro_inferior_inmediato Int?      @default(0)
+}
+
+model Escolaridad {
+  idescolaridad Int      @id
+  nombre        String   @map("nombre")
+  idcuenta      Int?     @map("idcuenta")
+  activo        Int      @default(1)
+  created_at    DateTime? @map("created_at")
+  updated_at    DateTime? @map("updated_at")
+}
+
+model EscolaridadDefault {
+  idescolaridad Int    @id
+  nombre        String @map("nombre")
+  activo        Int    @default(1)
+}
+
+model Estado {
+  idestado Int    @id
+  estado   String @map("estado")
+}
+
+model GrupoNivel1 {
+  idgrupo_nivel1 Int      @id
+  idcuenta       Int      @map("idcuenta")
+  nombre         String?  @map("nombre")
+  mensaje        String?  @map("mensaje")
+  activo         Int      @default(1)
+  created_at     DateTime? @map("created_at")
+  updated_at     DateTime? @map("updated_at")
+  created_by     Int?     @map("created_by")
+  meta           Int      @default(0)
+}
+
+model GrupoNivel2 {
+  idgrupo_nivel2 Int      @id
+  idcuenta       Int      @map("idcuenta")
+  idnivel1       Int?     @map("idnivel1")
+  nombre         String?  @map("nombre")
+  mensaje        String?  @map("mensaje")
+  activo         Int      @default(1)
+  created_at     DateTime? @map("created_at")
+  updated_at     DateTime? @map("updated_at")
+  created_by     Int?     @map("created_by")
+  meta           Int      @default(0)
+}
+
+model GrupoNivel3 {
+  idgrupo_nivel3 Int      @id
+  idcuenta       Int      @map("idcuenta")
+  idnivel1       Int?     @map("idnivel1")
+  idnivel2       Int?     @map("idnivel2")
+  nombre         String?  @map("nombre")
+  mensaje        String?  @map("mensaje")
+  activo         Int      @default(1)
+  created_at     DateTime? @map("created_at")
+  updated_at     DateTime? @map("updated_at")
+  created_by     Int?     @map("created_by")
+  meta           Int      @default(0)
+}
+
+model GrupoNivel4 {
+  idgrupo_nivel4 Int      @id
+  idcuenta       Int      @map("idcuenta")
+  idnivel1       Int?     @map("idnivel1")
+  idnivel2       Int?     @map("idnivel2")
+  idnivel3       Int?     @map("idnivel3")
+  nombre         String?  @map("nombre")
+  mensaje        String?  @map("mensaje")
+  activo         Int      @default(1)
+  created_at     DateTime? @map("created_at")
+  updated_at     DateTime? @map("updated_at")
+  created_by     Int?     @map("created_by")
+  meta           Int      @default(0)
+}
+
+model GrupoNivel5 {
+  idgrupo_nivel5 Int      @id
+  idcuenta       Int      @map("idcuenta")
+  idnivel1       Int?     @map("idnivel1")
+  idnivel2       Int?     @map("idnivel2")
+  idnivel3       Int?     @map("idnivel3")
+  idnivel4       Int?     @map("idnivel4")
+  nombre         String?  @map("nombre")
+  mensaje        String?  @map("mensaje")
+  activo         Int      @default(1)
+  created_at     DateTime? @map("created_at")
+  updated_at     DateTime? @map("updated_at")
+  created_by     Int?     @map("created_by")
+  meta           Int      @default(0)
+}
+
+model GrupoNivel6 {
+  idgrupo_nivel6 Int      @id
+  idcuenta       Int      @map("idcuenta")
+  idnivel1       Int?     @map("idnivel1")
+  idnivel2       Int?     @map("idnivel2")
+  idnivel3       Int?     @map("idnivel3")
+  idnivel4       Int?     @map("idnivel4")
+  idnivel5       Int      @map("idnivel5")
+  nombre         String?  @map("nombre")
+  mensaje        String?  @map("mensaje")
+  activo         Int      @default(1)
+  created_at     DateTime? @map("created_at")
+  updated_at     DateTime? @map("updated_at")
+  created_by     Int?     @map("created_by")
+  meta           Int      @default(0)
+}
+
+model GrupoNivel7 {
+  idgrupo_nivel7 Int      @id
+  idcuenta       Int      @map("idcuenta")
+  idnivel1       Int?     @map("idnivel1")
+  idnivel2       Int?     @map("idnivel2")
+  idnivel3       Int?     @map("idnivel3")
+  idnivel4       Int?     @map("idnivel4")
+  idnivel5       Int      @map("idnivel5")
+  idnivel6       Int?     @map("idnivel6")
+  nombre         String?  @map("nombre")
+  mensaje        String?  @map("mensaje")
+  activo         Int      @default(1)
+  created_at     DateTime? @map("created_at")
+  updated_at     DateTime? @map("updated_at")
+  created_by     Int?     @map("created_by")
+  meta           Int      @default(0)
+}
+
+model GrupoNivel8 {
+  idgrupo_nivel8 Int      @id
+  idcuenta       Int      @map("idcuenta")
+  idnivel1       Int?     @map("idnivel1")
+  idnivel2       Int?     @map("idnivel2")
+  idnivel3       Int?     @map("idnivel3")
+  idnivel4       Int?     @map("idnivel4")
+  idnivel5       Int      @map("idnivel5")
+  idnivel6       Int?     @map("idnivel6")
+  idnivel7       Int      @map("idnivel7")
+  nombre         String?  @map("nombre")
+  mensaje        String?  @map("mensaje")
+  activo         Int      @default(1)
+  created_at     DateTime? @map("created_at")
+  updated_at     DateTime? @map("updated_at")
+  created_by     Int?     @map("created_by")
+  meta           Int      @default(0)
+}
+
+model Log {
+  idlog       Int      @id
+  idusuario   Int      @map("idusuario")
+  accion      String   @map("accion")
+  created_at  DateTime @map("created_at") @default(now())
+  updated_at  DateTime @map("updated_at") @default(now())
+}
+
+
+model Mensaje {
+  idmensaje       Int      @id
+  mensaje         String   @map("mensaje") @default("")
+  idremitente     Int?     @map("idremitente")
+  idconversacion  Int?     @map("idconversacion")
+  tipo            String?  @map("tipo")
+}
+
+model Municipio {
+  idestado    Int    @map("idestado")
+  estado      String @map("estado")
+  idmunicipio Int    @id @map("idmunicipio")
+  municipio   String @map("municipio")
+}
+
+model Ocupacion {
+  idocupacion Int      @id
+  nombre      String   @map("nombre")
+  idcuenta    Int?     @map("idcuenta")
+  activo      Int      @default(1)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+}
+
+model OcupacionDefault {
+  idocupacion Int    @id
+  nombre      String @map("nombre")
+  activo      Int    @default(1)
+}
+
+model Parametrizable {
+  idparametrizable Int      @id
+  clave_elector    String   @map("clave_elector")
+  curp             String   @map("curp")
+  seccion          String   @map("seccion")
+  domicilio        String   @map("domicilio")
+  exterior         String   @map("exterior")
+  celular          String   @map("celular")
+  eventos          String?  @map("eventos")
+  foto1            String   @map("foto1")
+  foto2            String   @map("foto2")
+  foto3            String   @map("foto3")
+  foto4            String   @map("foto4")
+  foto5            String   @map("foto5")
+  foto6            String   @map("foto6")
+  foto7            String   @map("foto7")
+  foto8            String   @map("foto8")
+  foto9            String   @map("foto9")
+  foto10           String   @map("foto10")
+  primer_nivel     Int      @default(1)
+  created_at       DateTime @default(now()) @updatedAt
+  updated_at       DateTime @default(now())
+}
+
+model Parametros1 {
+  idparametro1 Int      @id
+  nombre       String?  @map("nombre")
+  idcuenta     Int?     @map("idcuenta")
+  activo       Int      @default(1)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now())
+}
+
+model Parametros2 {
+  idparametro2 Int      @id
+  nombre       String?  @map("nombre")
+  idcuenta     Int?     @map("idcuenta")
+  activo       Int      @default(1)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now())
+}
+
+model Parametros3 {
+  idparametro3 Int      @id
+  nombre       String?  @map("nombre")
+  idcuenta     Int?     @map("idcuenta")
+  activo       Int      @default(1)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now())
+}
+
+model Permisos {
+  idpermiso          Int      @id
+  mapas              Int      @default(1)
+  tareas             Int      @default(1)
+  reportes           Int      @default(1)
+  configuracion      Int      @default(1)
+  eventos            Int      @default(1)
+  contactos          Int      @default(1)
+  beneficiarios      Int      @default(1)
+  credencializacion Int      @default(1)
+  auditoria          Int      @default(1)
+  visualizar_niveles Int      @default(1)
+  updated_at         DateTime?
+  created_at         DateTime?
+}
+
+model Seccion {
+  idseccion     Int      @id
+  idcuenta      Int      @map("idcuenta")
+  idestado      Int      @map("idestado")
+  seccion       Int      @map("seccion")
+  listado_nominal Int   @map("listado_nominal")
+  meta          Int      @map("meta")
+  created_at    DateTime @default(now()) @updatedAt
+  updated_at    DateTime?
+  activo        Int      @default(1)
+  idmunicipio   Int      @map("idmunicipio")
+} 
+
+model SeccionesGeneral {
+  seccion        Int    @id
+  idestado       Int    @map("idestado")
+  estado         String @map("estado")
+  idmunicipio    Int    @map("idmunicipio")
+  distrito       Int    @map("distrito")
+  distrito_local Int    @map("distrito_local")
+}
+
+model Tarea {
+  idtarea             Int      @id
+  nombre              String?  @map("nombre")
+  descripcion         String?  @map("descripcion")
+  nivel               Int?     @map("nivel")
+  idnivel1            Int?     @map("idnivel1")
+  idnivel2            Int?     @map("idnivel2")
+  idnivel3            Int?     @map("idnivel3")
+  idnivel4            Int?     @map("idnivel4")
+  idnivel5            Int?     @map("idnivel5")
+  idnivel6            Int?     @map("idnivel6")
+  idnivel7            Int?     @map("idnivel7")
+  idnivel8            Int?     @map("idnivel8")
+  fecha_inicio        DateTime? @map("fecha_inicio")
+  fecha_vencimiento   DateTime? @map("fecha_vencimiento")
+  idcuenta            Int?     @map("idcuenta")
+  created_at          DateTime? @map("created_at")
+  updated_at          DateTime? @map("updated_at")
+  created_by          Int?     @map("created_by")
+  activo              Int?     @map("activo")
+  latitud             Float?   @map("latitud")
+  longitud            Float?   @map("longitud")
+  direccion           String?  @map("direccion")
+}
+
+model TareaCompletada {
+  idtarea_completada  Int      @id
+  idtarea_grupo       Int?     @map("idtarea_grupo")
+  nombre              String?  @map("nombre")
+  descripcion         String?  @map("descripcion")
+  idpersona           Int?     @map("idpersona")
+  idcuenta            Int?     @map("idcuenta")
+  foto                String?  @map("foto")
+  created_at          DateTime? @map("created_at")
+  updated_at          DateTime? @map("updated_at")
+  activo              Int?     @map("activo")
+  foto2               String?  @map("foto2")
+  foto3               String?  @map("foto3")
+  foto4               String?  @map("foto4")
+  foto5               String?  @map("foto5")
+  foto6               String?  @map("foto6")
+}
+
+model TareaGrupo {
+  idtarea_grupo       Int      @id
+  idtarea             Int      @map("idtarea")
+  nivel               Int      @map("nivel")
+  idnivel1            Int?     @map("idnivel1")
+  idnivel2            Int?     @map("idnivel2")
+  idnivel3            Int?     @map("idnivel3")
+  idnivel4            Int?     @map("idnivel4")
+  idnivel5            Int?     @map("idnivel5")
+  idnivel6            Int?     @map("idnivel6")
+  idnivel7            Int?     @map("idnivel7")
+  idnivel8            Int?     @map("idnivel8")
+  idcuenta            Int      @map("idcuenta")
+  created_at          DateTime @default(now())
+  updated_at          DateTime @default(now())
+  activo              Int      @default(1)
+}
+
+
+model TipoBeneficio {
+  idtipo_beneficio    Int      @id
+  idcuenta            Int      @map("idcuenta")
+  nombre              String   @map("nombre")
+  activo              Int      @default(1)
+  created_at          DateTime @default(now())
+  updated_at          DateTime @default(now())
+}
+
+model Validacion {
+  idvalidacion        Int      @id
+  nota                String?  @map("nota")
+  validacion          Int?     @map("validacion")
+  idpersona           Int?     @map("idpersona")
+  idcuenta            Int?     @map("idcuenta")
+  activo              Int?     @map("activo")
+  created_at          DateTime @default(now())
+  updated_at          DateTime @default(now())
+}
+
+// -- Ejemplo para la tabla beneficio
+// ALTER TABLE beneficio RENAME TO Beneficio;
+
+// -- Repite el siguiente bloque para cada tabla
+// ALTER TABLE contacto RENAME TO Contacto;
+// ALTER TABLE contacto_asignado RENAME TO ContactoAsignado;
+// ALTER TABLE contacto_grupo RENAME TO ContactoGrupo;
+// ALTER TABLE conversacion_user RENAME TO ConversacionUser;
+// ALTER TABLE credencializacion RENAME TO Credencializacion;
+// ALTER TABLE credencializacion_persona RENAME TO CredencializacionPersona;
+// ALTER TABLE cuenta RENAME TO Cuenta;
+// ALTER TABLE escolaridad RENAME TO Escolaridad;
+// ALTER TABLE escolaridad_default RENAME TO EscolaridadDefault;
+// ALTER TABLE estados RENAME TO Estados;
+// ALTER TABLE grupo_nivel1 RENAME TO GrupoNivel1;
+// ALTER TABLE grupo_nivel2 RENAME TO GrupoNivel2;
+// ALTER TABLE grupo_nivel3 RENAME TO GrupoNivel3;
+// ALTER TABLE grupo_nivel4 RENAME TO GrupoNivel4;
+// ALTER TABLE grupo_nivel5 RENAME TO GrupoNivel5;
+// ALTER TABLE grupo_nivel6 RENAME TO GrupoNivel6;
+// ALTER TABLE grupo_nivel7 RENAME TO GrupoNivel7;
+// ALTER TABLE grupo_nivel8 RENAME TO GrupoNivel8;
+// ALTER TABLE logs RENAME TO Logs;
+// ALTER TABLE mensaje RENAME TO Mensaje;
+// ALTER TABLE migrations RENAME TO Migrations;
+// ALTER TABLE municipios RENAME TO Municipios;
+// ALTER TABLE oauth_access_tokens RENAME TO OauthAccessTokens;
+// ALTER TABLE oauth_auth_codes RENAME TO OauthAuthCodes;
+// ALTER TABLE oauth_clients RENAME TO OauthClients;
+// ALTER TABLE oauth_personal_access_clients RENAME TO OauthPersonalAccessClients;
+// ALTER TABLE oauth_refresh_tokens RENAME TO OauthRefreshTokens;
+// ALTER TABLE ocupacion RENAME TO Ocupacion;
+// ALTER TABLE ocupacion_default RENAME TO OcupacionDefault;
+// ALTER TABLE parametrizable RENAME TO Parametrizable;
+// ALTER TABLE parametros1 RENAME TO Parametros1;
+// ALTER TABLE parametros2 RENAME TO Parametros2;
+// ALTER TABLE parametros3 RENAME TO Parametros3;
+// ALTER TABLE password_resets RENAME TO PasswordResets;
+// ALTER TABLE permisos RENAME TO Permisos;
+// ALTER TABLE persona RENAME TO Persona;
+// ALTER TABLE seccion RENAME TO Seccion;
+// ALTER TABLE secciones_general RENAME TO SeccionesGeneral;
+// ALTER TABLE tarea RENAME TO Tarea;
+// ALTER TABLE tarea_completada RENAME TO TareaCompletada;
+// ALTER TABLE tarea_grupo RENAME TO TareaGrupo;
+// ALTER TABLE temp RENAME TO Temp;
+// ALTER TABLE tipo_beneficio RENAME TO TipoBeneficio;
+// ALTER TABLE users RENAME TO Users;
+// ALTER TABLE validacion RENAME TO Validacion;

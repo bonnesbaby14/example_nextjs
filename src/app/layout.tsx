@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "./components/Nav";
+import React, { useState, useEffect } from 'react';
+import { cookies } from 'next/headers';
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Title from next",
@@ -12,17 +13,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
   return (
     <html lang="es">
       <body className="min-h-screen ">
-          <Nav />
-        <div className="flex justify-center items-center p-24">
-          {children}
 
+        <div className="flex justify-center items-center h-screen">
+          {children}
         </div>
+
+
       </body>
     </html>
   );
