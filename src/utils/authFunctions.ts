@@ -16,7 +16,8 @@ export default async function getUser(){
 
 
     const jwt = cookies().get("token");
-
+    console.log("ENTRE AL GET USER")
+    console.log(jwt)
     if (!jwt) return NextResponse.redirect(new URL("/login", ""));
     
     try {

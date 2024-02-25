@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import Nav from "./components/Nav";
+import "../globals.css";
+import Nav from "../components/Nav"
 import React, { useState, useEffect } from 'react';
 import { cookies } from 'next/headers';
 
@@ -23,7 +23,9 @@ export default function RootLayout({
     <html lang="es">
       <body className="min-h-screen ">
 
-      {children}
+        <div className="flex justify-center items-center h-screen">
+          {children}
+        </div>
 
 
       </body>

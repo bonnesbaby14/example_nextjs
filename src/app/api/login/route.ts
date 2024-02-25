@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
 
     try {
     
+  
 
         const { email, password } = await req.json();
 
@@ -77,7 +78,7 @@ export async function POST(req: NextRequest) {
         cookies().set({
             name: 'token',
             value: token,
-            httpOnly: true,
+            httpOnly: false,
         });
 
         // Enviar una respuesta exitosa con el token

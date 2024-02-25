@@ -20,13 +20,10 @@ export default function RootLayout({
 
     return (
 
-        <div>
-            <Nav />
-            <div>
-                {children}
-
-            </div>
-        </div>
+    <div>
+        <Nav/>
+        {children}
+    </div>
 
     );
 }

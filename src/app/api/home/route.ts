@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import { NextResponse, NextRequest } from "next/server"
 import { PrismaClient , Prisma} from "@prisma/client";
 import getUser, { JwtPayload } from "@/utils/authFunctions";
 import { use } from "react";
@@ -7,7 +7,8 @@ const prisma=new PrismaClient();
 
 
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  console.log("aqui andamos back")
 
     interface Level {
 
@@ -17,10 +18,11 @@ export async function GET() {
       }
       
     
-
+      console.log("aqui andamos back 2")
 
     const  user : JwtPayload = await getUser() as JwtPayload;
 
+   
     const account = await prisma.cuenta.findFirst({
         where: { idcuenta: parseInt(user.idcuenta.toString()) }
       });
@@ -1013,20 +1015,22 @@ data_persons.forEach((person) => {
 
 
    
+console.log("se me hizo una petcion")
 
-
-
-  
 
     return NextResponse.json({
-        data:{
-          "graphic":data_graphic,
-          "counters":levels
-
-        } ,
-
+      data:{
+        graphic:data_graphic,
+        counters:levels
+    
+      } ,
+      
+    
     }, {
-        status: 200,
-    })
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
     
 }

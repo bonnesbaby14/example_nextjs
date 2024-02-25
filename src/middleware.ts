@@ -8,7 +8,15 @@ export async function middleware(req: NextRequest) {
     console.log("entre al midd")
     const jwt = cookies().get("token");
 
-    if (!jwt) return NextResponse.redirect(new URL("/login", req.url));
+    // console.log("este es el cookie",jwt)
+
+    if (!jwt){
+
+        console.log("nel")
+        return NextResponse.redirect(new URL("/login", req.url));
+    } else{
+        console.log("si todo bien")
+    }
 
 
     try {
@@ -16,6 +24,7 @@ export async function middleware(req: NextRequest) {
             jwt.value,
             new TextEncoder().encode("secret")
         );
+        console.log("si pasa")
         return NextResponse.next();
     } catch (error) {
         return NextResponse.redirect(new URL("/login", req.url));
