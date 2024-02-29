@@ -1028,7 +1028,7 @@ const data_persons = await prisma.persona.findMany({
 // Procesar los resultados en tu código
 const data_graphic: Record<string, number> = {};
 
-data_persons.forEach((person) => {
+data_persons.forEach((person:any) => {
 const date_without_time = person.created_at?.toISOString().split('T')[0];
 
 if (date_without_time) {

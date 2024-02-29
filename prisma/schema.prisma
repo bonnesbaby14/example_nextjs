@@ -76,7 +76,7 @@ model Persona {
   foto_10             String?
   latitud             String?
   longitud            String?
-  idnivel1            Int? @relation(fields: [idnivel1],references: [id])
+  idnivel1            Int? 
   idnivel2            Int?
   idnivel3            Int?
   idnivel4            Int?

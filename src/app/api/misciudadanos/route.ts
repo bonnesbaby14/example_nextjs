@@ -64,6 +64,8 @@ gn6.nombre as grupo_nivel6,
 gn7.nombre as grupo_nivel7,
 gn8.nombre as grupo_nivel8,
 Persona.nombre,
+Persona.apellido_paterno,
+Persona.apellido_materno,
 Persona.curp,
 Persona.clave_elector
 
@@ -81,6 +83,8 @@ Persona.clave_elector
 where Persona.idcuenta=${account?.idcuenta} 
 and Persona.activo=1 
 and Persona.idpersona != ${user.idpersona} 
+
+limit 20 
 
 `
 if(viewLeaders > 0 && (user.visualizador==0 && user.nivel>0) )
@@ -126,19 +130,11 @@ if(viewLeaders > 0 && (user.visualizador==0 && user.nivel>0) )
   
   // const citizens=await prisma.$queryRaw(query_sql);
 
-  console.log(query_sql)
 
   const citizens = await prisma.$queryRaw(query_sql);
 
 
-  console.log("esta es la data")
-  console.log(citizens)
-
-
-  console.log(
-
-     citizens
-  );
+  
   
 
 
@@ -146,7 +142,7 @@ console.log("se me hizo una petcion")
 
 
 return NextResponse.json({
-  data:{data: citizens
+  data:{persons: citizens
 
 
   } ,
