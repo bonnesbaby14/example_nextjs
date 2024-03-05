@@ -1,6 +1,4 @@
 
-
-"use client"
 import { getHome } from "@/utils/homeFunctions";
 import { cookies } from "next/headers";
 import React, { useState, useEffect, Suspense } from 'react';
@@ -15,6 +13,9 @@ type HomeData = {
 };
 
 const Home = () => {
+
+
+ const danos_nuevos=await getHome()
 
   const [homeData, setHomeData] = useState<HomeData>({ persons: [] });
 

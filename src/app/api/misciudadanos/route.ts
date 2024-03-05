@@ -21,7 +21,15 @@ export interface GraphicItem{
 
 export async function GET(req: NextRequest) {
   
-  
+  //  const personasConGrupo = await prisma.persona.findMany({
+  //     include: {
+  //       grupoNivel1: {
+  //         select: {
+  //           nombre: true,
+  //         },
+  //       },
+  //     },
+  //   });
 
 
 const  user : JwtPayload = await getUser() as JwtPayload;

@@ -132,6 +132,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
           where: {
             idcuenta: user.idcuenta,
             activo: 1,
+          
             idnivel1: {not:null},
             idnivel2: {not:null},
             idnivel3: null,

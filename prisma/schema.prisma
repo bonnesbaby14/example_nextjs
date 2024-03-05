@@ -11,614 +11,700 @@ datasource db {
 }
 
 model Users {
-  id Int @id  @default(autoincrement())
-  name  String?
-  email  String?
-  email_verified_at  DateTime?
-  password  String?
-  remember_token  String?
-  idpersona  Int?
-  idcuenta  Int?
-  nivel  Int?
-  super  Int?
-  primer_acceso  Int?
-  habilitado  Int?
-  activo  Int?
-  created_at  DateTime?
-  updated_at  DateTime?
-  logged_at  DateTime?
-  gratuita  Int?
-  idpersona_lider  String?
-  visualizador  Int?
+  user_id          Int      @id @default(autoincrement())
+  name             String
+  email            String
+  password         String
+  person__fk       Int
+  account__fk      Int
+  lever            Int
+  super            Int
+  first_access     Int
+  enabled          Int
+  active           Int
+  created_at       DateTime
+  updated_at       DateTime
+  logged_at        DateTime
+  free             Int
+  leader_person_id String
+  visualizer       Int
+  account          Accounts @relation(fields: [account__fk], references: [account_id])
 }
 
-model Persona {
-  idpersona           Int       @id
-  idcuenta            Int?
-  apellido_paterno    String?
-  apellido_materno    String?
-  nombre              String?
-  domicilio           String?
-  exterior            String?
-  interior            String?
-  manzana_electoral   String?
-  colonia             String?
-  municipio_estado    String?
-  edad                Int?
-  fecha_nacimiento    String?
-  sexo                String?
-  localidad           String?
-  emision             String?
-  vigencia            String?
-  curp                String?
-  clave_elector       String?
-  seccion             String?
-  estado              String?
-  municipio           String?
-  email               String?
-  numero              String?
-  facebook            String?
-  twitter             String?
-  numero_local        String?
-  nota_1              String?
-  nota_2              String?
-  escolaridad         String?
-  ocupacion           String?
-  foto_1              String?
-  foto_2              String?
-  foto_3              String?
-  foto_4              String?
-  foto_5              String?
-  foto_6              String?
-  foto_7              String?
-  foto_8              String?
-  foto_9              String?
-  foto_10             String?
-  latitud             String?
-  longitud            String?
-  idnivel1            Int? 
-  idnivel2            Int?
-  idnivel3            Int?
-  idnivel4            Int?
-  idnivel5            Int?
-  idnivel6            Int?
-  idnivel7            Int?
-  idnivel8            Int?
-  created_by          Int?
-  created_at          DateTime?
-  updated_by          Int?
-  updated_at          DateTime?
-  registro_en_movil   Int      @default(0)
-  activo              Int      @default(1)
-  parametro1          String?
-  parametro2          String?
-  parametro3          String?
-  direccion           String?
-  SAC                 Int      @default(0)
-  credencial          Int      @default(0)
-  idpersona_lider     String?
-  idvalidacion        Int?
-  whatsapp            Int      @default(0)
+model Accounts {
+  account_id                   Int          @id @default(autoincrement())
+  name                         String
+  level_1                      String
+  level_2                      String
+  level_3                      String
+  level_4                      String
+  level_5                      String
+  level_6                      String?
+  level_7                      String?
+  level_8                      String?
+  catalogo_1                   String
+  catalogo_2                   String
+  catalogo_3                   String
+  photo_1                      String?
+  photo_2                      String?
+  photo_3                      String?
+  photo_4                      String?
+  photo_5                      String?
+  photo_6                      String?
+  photo_7                      String?
+  photo_8                      String?
+  photo_9                      String?
+  photo_10                     String?
+  message                      String?
+  number_levels                Int          @default(5)
+  param_nivel1_fk              Int?         @unique
+  param_nivel2_fk              Int?         @unique
+  param_nivel3_fk              Int?         @unique
+  param_nivel4_fk              Int?         @unique
+  param_nivel5_fk              Int?         @unique
+  param_nivel6_fk              Int?         @unique
+  param_nivel7_fk              Int?         @unique
+  param_nivel8_fk              Int?         @unique
+  created_by                   Int          @default(0)
+  created_at                   DateTime
+  updated_by                   Int          @default(0)
+  updated_at                   DateTime
+  enabled                      Int          @default(1)
+  block_deadline_date          DateTime?
+  active                       Int          @default(1)
+  enable_load                  Int          @default(1)
+  free                         Int          @default(0)
+  lite                         Int          @default(0)
+  stated_fk                    Int          @default(0)
+  municipality_fk              Int          @default(0)
+  permission_level1_fk         Int?         @unique
+  permission_level2_fk         Int?         @unique
+  permission_level3_fk         Int?         @unique
+  permission_level4_fk         Int?         @unique
+  permission_level5_fk         Int?         @unique
+  permission_level6_fk         Int?         @unique
+  permission_level7_fk         Int?         @unique
+  permission_level8_fk         Int?         @unique
+  leader_view                  Int          @default(0)
+  immediate_lower_registration Int          @default(0)
+  users                        Users[]
+  permission_level1            Permissions? @relation("accounts_permission1", fields: [permission_level1_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level2            Permissions? @relation("accounts_permission2", fields: [permission_level2_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level3            Permissions? @relation("accounts_permission3", fields: [permission_level3_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level4            Permissions? @relation("accounts_permission4", fields: [permission_level4_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level5            Permissions? @relation("accounts_permission5", fields: [permission_level5_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level6            Permissions? @relation("accounts_permission6", fields: [permission_level6_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level7            Permissions? @relation("accounts_permission7", fields: [permission_level7_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level8            Permissions? @relation("accounts_permission8", fields: [permission_level8_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+
+  param_level1 Params? @relation("accounts_param1", fields: [param_nivel1_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level2 Params? @relation("accounts_param2", fields: [param_nivel2_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level3 Params? @relation("accounts_param3", fields: [param_nivel3_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level4 Params? @relation("accounts_param4", fields: [param_nivel4_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level5 Params? @relation("accounts_param5", fields: [param_nivel5_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level6 Params? @relation("accounts_param6", fields: [param_nivel6_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level7 Params? @relation("accounts_param7", fields: [param_nivel7_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level8 Params? @relation("accounts_param8", fields: [param_nivel8_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
 }
 
-model Beneficio {
-  idbeneficio      Int       @id
-  idcuenta         Int       @map("idcuenta")
-  idpersona        Int       @map("idpersona")
-  idtipo_beneficio Int       @map("idtipo_beneficio")
-  descripcion      String?   @map("descripcion")
-  cantidad         Int       @map("cantidad")
-  archivo          String?   @map("archivo")
-  activo           Int       @default(1)
-  created_at       DateTime  @default(now())
-  updated_at       DateTime  @default(now())
-  created_by       Int
-  updated_by       Int?
+model Permissions {
+  permission_id        Int       @id @default(autoincrement())
+  map                  Int       @default(1)
+  task                 Int       @default(1)
+  report               Int       @default(1)
+  setting              Int       @default(1)
+  event                Int       @default(1)
+  contact              Int       @default(1)
+  beneficiary          Int       @default(1)
+  card                 Int       @default(1)
+  audit                Int       @default(1)
+  display_levels       Int       @default(1)
+  updated_at           DateTime
+  created_at           DateTime
+  accounts_permission1 Accounts? @relation("accounts_permission1")
+  accounts_permission2 Accounts? @relation("accounts_permission2")
+  accounts_permission3 Accounts? @relation("accounts_permission3")
+  accounts_permission4 Accounts? @relation("accounts_permission4")
+  accounts_permission5 Accounts? @relation("accounts_permission5")
+  accounts_permission6 Accounts? @relation("accounts_permission6")
+  accounts_permission7 Accounts? @relation("accounts_permission7")
+  accounts_permission8 Accounts? @relation("accounts_permission8")
 }
 
-model Contacto {
-  idcontacto         Int       @id
-  nombre             String?   @map("nombre")
-  descripcion        String?   @map("descripcion")
-  estado             String?   @map("estado")
-  nivel              Int?      @map("nivel")
-  idnivel1           Int?      @map("idnivel1")
-  idnivel2           Int?      @map("idnivel2")
-  idnivel3           Int?      @map("idnivel3")
-  idnivel4           Int?      @map("idnivel4")
-  idnivel5           Int?      @map("idnivel5")
-  idnivel6           Int?      @map("idnivel6")
-  idnivel7           Int?      @map("idnivel7")
-  idnivel8           Int?      @map("idnivel8")
-  origen_idnivel1    Int?      @map("origen_idnivel1")
-  origen_idnivel2    Int?      @map("origen_idnivel2")
-  origen_idnivel3    Int?      @map("origen_idnivel3")
-  origen_idnivel4    Int?      @map("origen_idnivel4")
-  origen_idnivel5    Int?      @map("origen_idnivel5")
-  origen_idnivel6    Int?      @map("origen_idnivel6")
-  origen_idnivel7    Int?      @map("origen_idnivel7")
-  origen_idnivel8    Int?      @map("origen_idnivel8")
-  idcuenta           Int?      @map("idcuenta")
-  created_at         DateTime? @map("created_at")
-  updated_at         DateTime? @map("updated_at")
-  created_by         Int?      @map("created_by")
-  activo             Int?      @default(1) @map("activo")
+model Params {
+  param_id        Int       @id @default(autoincrement())
+  clave_elector   Int       @default(0)
+  curp            Int       @default(0)
+  section         Int       @default(0)
+  address         Int       @default(0)
+  ext             Int       @default(0)
+  phone           Int       @default(0)
+  event           Int       @default(0)
+  photo1          Int       @default(0)
+  photoo2         Int       @default(0)
+  photo3          Int       @default(0)
+  photo4          Int       @default(0)
+  photo5          Int       @default(0)
+  photo6          Int       @default(0)
+  photo7          Int       @default(0)
+  photo8          Int       @default(0)
+  photo9          Int       @default(0)
+  photo0          Int       @default(0)
+  first_level     Int       @default(1)
+  created_at      DateTime  @default(now()) @updatedAt
+  updated_at      DateTime  @default(now())
+  accounts_param1 Accounts? @relation("accounts_param1")
+  accounts_param2 Accounts? @relation("accounts_param2")
+  accounts_param3 Accounts? @relation("accounts_param3")
+  accounts_param4 Accounts? @relation("accounts_param4")
+  accounts_param5 Accounts? @relation("accounts_param5")
+  accounts_param6 Accounts? @relation("accounts_param6")
+  accounts_param7 Accounts? @relation("accounts_param7")
+  accounts_param8 Accounts? @relation("accounts_param8")
 }
 
-model ContactoAsignado {
-  idcontacto_asignado      Int       @id
-  idcontacto_grupo         Int?      @map("idcontacto_grupo")
-  nombre                   String?   @map("nombre")
-  descripcion              String?   @map("descripcion")
-  nota                     String?   @map("nota")
-  estado                   String?   @map("estado")
-  idpersona                Int?      @map("idpersona")
-  idcuenta                 Int?      @map("idcuenta")
-  foto                     String?   @map("foto")
-  idpersona_completada     Int?      @map("idpersona_completada")
-  created_at               DateTime? @map("created_at")
-  updated_at               DateTime? @map("updated_at")
-  activo                   Int?      @default(1) @map("activo")
-}
+// model Persona {
+//   idpersona           Int       @id
+//   idcuenta            Int
+//   apellido_paterno    String
+//   apellido_materno    String
+//   nombre              String
+//   domicilio           String
+//   exterior            String
+//   interior            String
+//   manzana_electoral   String
+//   colonia             String
+//   municipio_estado    String
+//   edad                Int
+//   fecha_nacimiento    String
+//   sexo                String
+//   localidad           String
+//   emision             String
+//   vigencia            String
+//   curp                String
+//   clave_elector       String
+//   seccion             String
+//   estado              String
+//   municipio           String
+//   email               String
+//   numero              String
+//   facebook            String
+//   twitter             String
+//   numero_local        String
+//   nota_1              String
+//   nota_2              String
+//   escolaridad         String
+//   ocupacion           String
+//   photo_1              String
+//   photo_2              String
+//   photo_3              String
+//   photo_4              String
+//   photo_5              String
+//   photo_6              String
+//   photo_7              String
+//   photo_8              String
+//   photo_9              String
+//   photo_10             String
+//   latitud             String
+//   longitud            String
+//   idnivel1            Int 
+//   idnivel2            Int
+//   idnivel3            Int
+//   idnivel4            Int
+//   idnivel5            Int
+//   idnivel6            Int
+//   idnivel7            Int
+//   idnivel8            Int
+//   created_by          Int
+//   created_at          DateTime
+//   updated_by          Int
+//   updated_at          DateTime
+//   registro_en_movil   Int      @default(0)
+//   activo              Int      @default(1)
+//   parametro1          String
+//   parametro2          String
+//   parametro3          String
+//   direccion           String
+//   SAC                 Int      @default(0)
+//   credencial          Int      @default(0)
+//   idpersona_lider     String
+//   idvalidacion        Int
+//   whatsapp            Int      @default(0)
+//   GrupoNivel1 GrupoNivel1 @relation(fields: [idnivel1], references: [idgrupo_nivel1])
+//   GrupoNivel2 GrupoNivel2 @relation(fields: [idnivel2], references: [idgrupo_nivel2])
+//   GrupoNivel3 GrupoNivel3 @relation(fields: [idnivel3], references: [idgrupo_nivel3])
+//   GrupoNivel4 GrupoNivel4 @relation(fields: [idnivel4], references: [idgrupo_nivel4])
+//   GrupoNivel5 GrupoNivel5 @relation(fields: [idnivel5], references: [idgrupo_nivel5])
+//   GrupoNivel6 GrupoNivel6 @relation(fields: [idnivel6], references: [idgrupo_nivel6])
+//   GrupoNivel7 GrupoNivel7 @relation(fields: [idnivel7], references: [idgrupo_nivel7])
+//   GrupoNivel8 GrupoNivel8 @relation(fields: [idnivel8], references: [idgrupo_nivel8])
 
-model ContactoGrupo {
-  idcontacto_grupo Int      @id
-  idcontacto       Int      @map("idcontacto")
-  idcuenta         Int      @map("idcuenta")
-  idnivel1         Int?     @map("idnivel1")
-  idnivel2         Int?     @map("idnivel2")
-  idnivel3         Int?     @map("idnivel3")
-  idnivel4         Int?     @map("idnivel4")
-  idnivel5         Int?     @map("idnivel5")
-  idnivel6         Int?     @map("idnivel6")
-  idnivel7         Int?     @map("idnivel7")
-  idnivel8         Int?     @map("idnivel8")
-  activo           Int      @default(1)
-  nivel            Int      @map("nivel")
-  created_at       DateTime @default(now())
-  updated_at       DateTime @default(now())
-}
+// }
 
-model ConversacionUser {
-  idconversacion_user  Int      @id
-  idconversacion       Int?     @map("idconversacion")
-  iduser               Int?     @map("iduser")
-}
+// model Beneficio {
+//   idbeneficio      Int       @id
+//   idcuenta         Int       @map("idcuenta")
+//   idpersona        Int       @map("idpersona")
+//   idtipo_beneficio Int       @map("idtipo_beneficio")
+//   descripcion      String   @map("descripcion")
+//   cantidad         Int       @map("cantidad")
+//   archivo          String   @map("archivo")
+//   activo           Int       @default(1)
+//   created_at       DateTime  @default(now())
+//   updated_at       DateTime  @default(now())
+//   created_by       Int
+//   updated_by       Int
+// }
 
-model Credencializacion {
-  idcredencializacion  Int      @id
-  idcuenta              Int      @map("idcuenta")
-  idgrupo               Int?     @map("idgrupo") @default(-1)
-  idpersona             Int?     @map("idpersona")
-  idpersona_lider       Int?     @map("idpersona_lider")
-  nivel                 Int      @map("nivel")
-  activo                Int      @default(1)
-  created_at            DateTime @default(now())
-  updated_at            DateTime @default(now())
-  created_by            Int?     @map("created_by")
-}
+// model Contacto {
+//   idcontacto         Int       @id
+//   nombre             String   @map("nombre")
+//   descripcion        String   @map("descripcion")
+//   estado             String   @map("estado")
+//   nivel              Int      @map("nivel")
+//   idnivel1           Int      @map("idnivel1")
+//   idnivel2           Int      @map("idnivel2")
+//   idnivel3           Int      @map("idnivel3")
+//   idnivel4           Int      @map("idnivel4")
+//   idnivel5           Int      @map("idnivel5")
+//   idnivel6           Int      @map("idnivel6")
+//   idnivel7           Int      @map("idnivel7")
+//   idnivel8           Int      @map("idnivel8")
+//   origen_idnivel1    Int      @map("origen_idnivel1")
+//   origen_idnivel2    Int      @map("origen_idnivel2")
+//   origen_idnivel3    Int      @map("origen_idnivel3")
+//   origen_idnivel4    Int      @map("origen_idnivel4")
+//   origen_idnivel5    Int      @map("origen_idnivel5")
+//   origen_idnivel6    Int      @map("origen_idnivel6")
+//   origen_idnivel7    Int      @map("origen_idnivel7")
+//   origen_idnivel8    Int      @map("origen_idnivel8")
+//   idcuenta           Int      @map("idcuenta")
+//   created_at         DateTime @map("created_at")
+//   updated_at         DateTime @map("updated_at")
+//   created_by         Int      @map("created_by")
+//   activo             Int      @default(1) @map("activo")
+// }
 
-model CredencializacionPersona {
-  idcredencializacion_persona Int   @id
-  idpersona                  Int   @map("idpersona")
-  idcredencializacion        Int   @map("idcredencializacion")
-  activo                      Int   @default(1)
-}
+// model ContactoAsignado {
+//   idcontacto_asignado      Int       @id
+//   idcontacto_grupo         Int      @map("idcontacto_grupo")
+//   nombre                   String   @map("nombre")
+//   descripcion              String   @map("descripcion")
+//   nota                     String   @map("nota")
+//   estado                   String   @map("estado")
+//   idpersona                Int      @map("idpersona")
+//   idcuenta                 Int      @map("idcuenta")
+//   foto                     String   @map("foto")
+//   idpersona_completada     Int      @map("idpersona_completada")
+//   created_at               DateTime @map("created_at")
+//   updated_at               DateTime @map("updated_at")
+//   activo                   Int      @default(1) @map("activo")
+// }
 
-model Cuenta {
-  idcuenta                    Int       @id
-  nombre                      String?   @map("nombre")
-  nivel_1                     String?   @map("nivel_1")
-  nivel_2                     String?   @map("nivel_2")
-  nivel_3                     String?   @map("nivel_3")
-  nivel_4                     String?   @map("nivel_4")
-  nivel_5                     String?   @map("nivel_5")
-  nivel_6                     String?   @map("nivel_6")
-  nivel_7                     String?   @map("nivel_7")
-  nivel_8                     String?   @map("nivel_8")
-  foto_1                      String?   @map("foto_1")
-  catalogo_1                  String?   @map("catalogo_1")
-  catalogo_2                  String?   @map("catalogo_2")
-  catalogo_3                  String?   @map("catalogo_3")
-  foto_2                      String?   @map("foto_2")
-  foto_3                      String?   @map("foto_3")
-  foto_4                      String?   @map("foto_4")
-  foto_5                      String?   @map("foto_5")
-  foto_6                      String?   @map("foto_6")
-  foto_7                      String?   @map("foto_7")
-  foto_8                      String?   @map("foto_8")
-  foto_9                      String?   @map("foto_9")
-  foto_10                     String?   @map("foto_10")
-  mensaje                     String?   @map("mensaje")
-  numero_niveles              Int      @default(5)
-  parametrizables_nivel1      Int?     @map("parametrizables_nivel1")
-  parametrizables_nivel2      Int?     @map("parametrizables_nivel2")
-  parametrizables_nivel3      Int?     @map("parametrizables_nivel3")
-  parametrizables_nivel4      Int?     @map("parametrizables_nivel4")
-  parametrizables_nivel5      Int?     @map("parametrizables_nivel5")
-  parametrizables_nivel6      Int?     @map("parametrizables_nivel6")
-  parametrizables_nivel7      Int?     @map("parametrizables_nivel7")
-  parametrizables_nivel8      Int?     @map("parametrizables_nivel8")
-  created_by                  Int?     @map("created_by")
-  created_at                  DateTime? @map("created_at")
-  updated_by                  Int?     @map("updated_by")
-  updated_at                  DateTime? @map("updated_at")
-  habilitado                  Int      @default(1)
-  fecha_limite_bloqueo        DateTime? @map("fecha_limite_bloqueo")
-  activo                      Int      @default(1)
-  habilitar_carga             Int      @default(1)
-  gratuita                    Int      @default(0)
-  lite                        Int      @default(0)
-  base_datos_SAC              String?  @map("base_datos_SAC")
-  usuario_SAC                 String?  @map("usuario_SAC")
-  idestado                    Int      @map("idestado")
-  idmunicipio                 Int      @map("idmunicipio")
-  permiso_nivel1              Int?     @map("permiso_nivel1")
-  permiso_nivel2              Int?     @map("permiso_nivel2")
-  permiso_nivel3              Int?     @map("permiso_nivel3")
-  permiso_nivel4              Int?     @map("permiso_nivel4")
-  permiso_nivel5              Int?     @map("permiso_nivel5")
-  permiso_nivel6              Int?     @map("permiso_nivel6")
-  permiso_nivel7              Int?     @map("permiso_nivel7")
-  permiso_nivel8              Int?     @map("permiso_nivel8")
-  vista_lideres               Int?      @default(0)
-  registro_inferior_inmediato Int?      @default(0)
-}
+// model ContactoGrupo {
+//   idcontacto_grupo Int      @id
+//   idcontacto       Int      @map("idcontacto")
+//   idcuenta         Int      @map("idcuenta")
+//   idnivel1         Int     @map("idnivel1")
+//   idnivel2         Int     @map("idnivel2")
+//   idnivel3         Int     @map("idnivel3")
+//   idnivel4         Int     @map("idnivel4")
+//   idnivel5         Int     @map("idnivel5")
+//   idnivel6         Int     @map("idnivel6")
+//   idnivel7         Int     @map("idnivel7")
+//   idnivel8         Int     @map("idnivel8")
+//   activo           Int      @default(1)
+//   nivel            Int      @map("nivel")
+//   created_at       DateTime @default(now())
+//   updated_at       DateTime @default(now())
+// }
 
-model Escolaridad {
-  idescolaridad Int      @id
-  nombre        String   @map("nombre")
-  idcuenta      Int?     @map("idcuenta")
-  activo        Int      @default(1)
-  created_at    DateTime? @map("created_at")
-  updated_at    DateTime? @map("updated_at")
-}
+// model ConversacionUser {
+//   idconversacion_user  Int      @id
+//   idconversacion       Int     @map("idconversacion")
+//   iduser               Int     @map("iduser")
+// }
 
-model EscolaridadDefault {
-  idescolaridad Int    @id
-  nombre        String @map("nombre")
-  activo        Int    @default(1)
-}
+// model Credencializacion {
+//   idcredencializacion  Int      @id
+//   idcuenta              Int      @map("idcuenta")
+//   idgrupo               Int     @map("idgrupo") @default(-1)
+//   idpersona             Int     @map("idpersona")
+//   idpersona_lider       Int     @map("idpersona_lider")
+//   nivel                 Int      @map("nivel")
+//   activo                Int      @default(1)
+//   created_at            DateTime @default(now())
+//   updated_at            DateTime @default(now())
+//   created_by            Int     @map("created_by")
+// }
 
-model Estado {
-  idestado Int    @id
-  estado   String @map("estado")
-}
+// model CredencializacionPersona {
+//   idcredencializacion_persona Int   @id
+//   idpersona                  Int   @map("idpersona")
+//   idcredencializacion        Int   @map("idcredencializacion")
+//   activo                      Int   @default(1)
+// }
 
-model GrupoNivel1 {
-  idgrupo_nivel1 Int      @id
-  idcuenta       Int      @map("idcuenta")
-  nombre         String?  @map("nombre")
-  mensaje        String?  @map("mensaje")
-  activo         Int      @default(1)
-  created_at     DateTime? @map("created_at")
-  updated_at     DateTime? @map("updated_at")
-  created_by     Int?     @map("created_by")
-  meta           Int      @default(0)
-  
-}
+// model Escolaridad {
+//   idescolaridad Int      @id
+//   nombre        String   @map("nombre")
+//   idcuenta      Int     @map("idcuenta")
+//   activo        Int      @default(1)
+//   created_at    DateTime @map("created_at")
+//   updated_at    DateTime @map("updated_at")
+// }
 
-model GrupoNivel2 {
-  idgrupo_nivel2 Int      @id
-  idcuenta       Int      @map("idcuenta")
-  idnivel1       Int?     @map("idnivel1")
-  nombre         String?  @map("nombre")
-  mensaje        String?  @map("mensaje")
-  activo         Int      @default(1)
-  created_at     DateTime? @map("created_at")
-  updated_at     DateTime? @map("updated_at")
-  created_by     Int?     @map("created_by")
-  meta           Int      @default(0)
-}
+// model EscolaridadDefault {
+//   idescolaridad Int    @id
+//   nombre        String @map("nombre")
+//   activo        Int    @default(1)
+// }
 
-model GrupoNivel3 {
-  idgrupo_nivel3 Int      @id
-  idcuenta       Int      @map("idcuenta")
-  idnivel1       Int?     @map("idnivel1")
-  idnivel2       Int?     @map("idnivel2")
-  nombre         String?  @map("nombre")
-  mensaje        String?  @map("mensaje")
-  activo         Int      @default(1)
-  created_at     DateTime? @map("created_at")
-  updated_at     DateTime? @map("updated_at")
-  created_by     Int?     @map("created_by")
-  meta           Int      @default(0)
-}
+// model Estado {
+//   idestado Int    @id
+//   estado   String @map("estado")
+// }
 
-model GrupoNivel4 {
-  idgrupo_nivel4 Int      @id
-  idcuenta       Int      @map("idcuenta")
-  idnivel1       Int?     @map("idnivel1")
-  idnivel2       Int?     @map("idnivel2")
-  idnivel3       Int?     @map("idnivel3")
-  nombre         String?  @map("nombre")
-  mensaje        String?  @map("mensaje")
-  activo         Int      @default(1)
-  created_at     DateTime? @map("created_at")
-  updated_at     DateTime? @map("updated_at")
-  created_by     Int?     @map("created_by")
-  meta           Int      @default(0)
-}
+// model GrupoNivel1 {
+//   idgrupo_nivel1 Int      @id
+//   idcuenta       Int      @map("idcuenta")
+//   nombre         String  @map("nombre")
+//   mensaje        String  @map("mensaje")
+//   activo         Int      @default(1)
+//   created_at     DateTime @map("created_at")
+//   updated_at     DateTime @map("updated_at")
+//   created_by     Int     @map("created_by")
+//   meta           Int      @default(0)
+//   Persona Persona[]
 
-model GrupoNivel5 {
-  idgrupo_nivel5 Int      @id
-  idcuenta       Int      @map("idcuenta")
-  idnivel1       Int?     @map("idnivel1")
-  idnivel2       Int?     @map("idnivel2")
-  idnivel3       Int?     @map("idnivel3")
-  idnivel4       Int?     @map("idnivel4")
-  nombre         String?  @map("nombre")
-  mensaje        String?  @map("mensaje")
-  activo         Int      @default(1)
-  created_at     DateTime? @map("created_at")
-  updated_at     DateTime? @map("updated_at")
-  created_by     Int?     @map("created_by")
-  meta           Int      @default(0)
-}
+// }
 
-model GrupoNivel6 {
-  idgrupo_nivel6 Int      @id
-  idcuenta       Int      @map("idcuenta")
-  idnivel1       Int?     @map("idnivel1")
-  idnivel2       Int?     @map("idnivel2")
-  idnivel3       Int?     @map("idnivel3")
-  idnivel4       Int?     @map("idnivel4")
-  idnivel5       Int      @map("idnivel5")
-  nombre         String?  @map("nombre")
-  mensaje        String?  @map("mensaje")
-  activo         Int      @default(1)
-  created_at     DateTime? @map("created_at")
-  updated_at     DateTime? @map("updated_at")
-  created_by     Int?     @map("created_by")
-  meta           Int      @default(0)
-}
+// model GrupoNivel2 {
+//   idgrupo_nivel2 Int      @id
+//   idcuenta       Int      @map("idcuenta")
+//   idnivel1       Int     @map("idnivel1")
+//   nombre         String  @map("nombre")
+//   mensaje        String  @map("mensaje")
+//   activo         Int      @default(1)
+//   created_at     DateTime @map("created_at")
+//   updated_at     DateTime @map("updated_at")
+//   created_by     Int     @map("created_by")
+//   meta           Int      @default(0)
+//   Persona Persona[]
+// }
 
-model GrupoNivel7 {
-  idgrupo_nivel7 Int      @id
-  idcuenta       Int      @map("idcuenta")
-  idnivel1       Int?     @map("idnivel1")
-  idnivel2       Int?     @map("idnivel2")
-  idnivel3       Int?     @map("idnivel3")
-  idnivel4       Int?     @map("idnivel4")
-  idnivel5       Int      @map("idnivel5")
-  idnivel6       Int?     @map("idnivel6")
-  nombre         String?  @map("nombre")
-  mensaje        String?  @map("mensaje")
-  activo         Int      @default(1)
-  created_at     DateTime? @map("created_at")
-  updated_at     DateTime? @map("updated_at")
-  created_by     Int?     @map("created_by")
-  meta           Int      @default(0)
-}
+// model GrupoNivel3 {
+//   idgrupo_nivel3 Int      @id
+//   idcuenta       Int      @map("idcuenta")
+//   idnivel1       Int     @map("idnivel1")
+//   idnivel2       Int     @map("idnivel2")
+//   nombre         String  @map("nombre")
+//   mensaje        String  @map("mensaje")
+//   activo         Int      @default(1)
+//   created_at     DateTime @map("created_at")
+//   updated_at     DateTime @map("updated_at")
+//   created_by     Int     @map("created_by")
+//   meta           Int      @default(0)
+//   Persona Persona[]
+// }
 
-model GrupoNivel8 {
-  idgrupo_nivel8 Int      @id
-  idcuenta       Int      @map("idcuenta")
-  idnivel1       Int?     @map("idnivel1")
-  idnivel2       Int?     @map("idnivel2")
-  idnivel3       Int?     @map("idnivel3")
-  idnivel4       Int?     @map("idnivel4")
-  idnivel5       Int      @map("idnivel5")
-  idnivel6       Int?     @map("idnivel6")
-  idnivel7       Int      @map("idnivel7")
-  nombre         String?  @map("nombre")
-  mensaje        String?  @map("mensaje")
-  activo         Int      @default(1)
-  created_at     DateTime? @map("created_at")
-  updated_at     DateTime? @map("updated_at")
-  created_by     Int?     @map("created_by")
-  meta           Int      @default(0)
-}
+// model GrupoNivel4 {
+//   idgrupo_nivel4 Int      @id
+//   idcuenta       Int      @map("idcuenta")
+//   idnivel1       Int     @map("idnivel1")
+//   idnivel2       Int     @map("idnivel2")
+//   idnivel3       Int     @map("idnivel3")
+//   nombre         String  @map("nombre")
+//   mensaje        String  @map("mensaje")
+//   activo         Int      @default(1)
+//   created_at     DateTime @map("created_at")
+//   updated_at     DateTime @map("updated_at")
+//   created_by     Int     @map("created_by")
+//   meta           Int      @default(0)
+//   Persona Persona[]
+// }
 
-model Log {
-  idlog       Int      @id
-  idusuario   Int      @map("idusuario")
-  accion      String   @map("accion")
-  created_at  DateTime @map("created_at") @default(now())
-  updated_at  DateTime @map("updated_at") @default(now())
-}
+// model GrupoNivel5 {
+//   idgrupo_nivel5 Int      @id
+//   idcuenta       Int      @map("idcuenta")
+//   idnivel1       Int     @map("idnivel1")
+//   idnivel2       Int     @map("idnivel2")
+//   idnivel3       Int     @map("idnivel3")
+//   idnivel4       Int     @map("idnivel4")
+//   nombre         String  @map("nombre")
+//   mensaje        String  @map("mensaje")
+//   activo         Int      @default(1)
+//   created_at     DateTime @map("created_at")
+//   updated_at     DateTime @map("updated_at")
+//   created_by     Int     @map("created_by")
+//   meta           Int      @default(0)
+//   Persona Persona[]
+// }
 
+// model GrupoNivel6 {
+//   idgrupo_nivel6 Int      @id
+//   idcuenta       Int      @map("idcuenta")
+//   idnivel1       Int     @map("idnivel1")
+//   idnivel2       Int     @map("idnivel2")
+//   idnivel3       Int     @map("idnivel3")
+//   idnivel4       Int     @map("idnivel4")
+//   idnivel5       Int      @map("idnivel5")
+//   nombre         String  @map("nombre")
+//   mensaje        String  @map("mensaje")
+//   activo         Int      @default(1)
+//   created_at     DateTime @map("created_at")
+//   updated_at     DateTime @map("updated_at")
+//   created_by     Int     @map("created_by")
+//   meta           Int      @default(0)
+//   Persona Persona[]
+// }
 
-model Mensaje {
-  idmensaje       Int      @id
-  mensaje         String   @map("mensaje") @default("")
-  idremitente     Int?     @map("idremitente")
-  idconversacion  Int?     @map("idconversacion")
-  tipo            String?  @map("tipo")
-}
+// model GrupoNivel7 {
+//   idgrupo_nivel7 Int      @id
+//   idcuenta       Int      @map("idcuenta")
+//   idnivel1       Int     @map("idnivel1")
+//   idnivel2       Int     @map("idnivel2")
+//   idnivel3       Int     @map("idnivel3")
+//   idnivel4       Int     @map("idnivel4")
+//   idnivel5       Int      @map("idnivel5")
+//   idnivel6       Int     @map("idnivel6")
+//   nombre         String  @map("nombre")
+//   mensaje        String  @map("mensaje")
+//   activo         Int      @default(1)
+//   created_at     DateTime @map("created_at")
+//   updated_at     DateTime @map("updated_at")
+//   created_by     Int     @map("created_by")
+//   meta           Int      @default(0)
+//   Persona Persona[]
+// }
 
-model Municipio {
-  idestado    Int    @map("idestado")
-  estado      String @map("estado")
-  idmunicipio Int    @id @map("idmunicipio")
-  municipio   String @map("municipio")
-}
+// model GrupoNivel8 {
+//   idgrupo_nivel8 Int      @id
+//   idcuenta       Int      @map("idcuenta")
+//   idnivel1       Int     @map("idnivel1")
+//   idnivel2       Int     @map("idnivel2")
+//   idnivel3       Int     @map("idnivel3")
+//   idnivel4       Int     @map("idnivel4")
+//   idnivel5       Int      @map("idnivel5")
+//   idnivel6       Int     @map("idnivel6")
+//   idnivel7       Int      @map("idnivel7")
+//   nombre         String  @map("nombre")
+//   mensaje        String  @map("mensaje")
+//   activo         Int      @default(1)
+//   created_at     DateTime @map("created_at")
+//   updated_at     DateTime @map("updated_at")
+//   created_by     Int     @map("created_by")
+//   meta           Int      @default(0)
+//   Persona Persona[]
+// }
 
-model Ocupacion {
-  idocupacion Int      @id
-  nombre      String   @map("nombre")
-  idcuenta    Int?     @map("idcuenta")
-  activo      Int      @default(1)
-  created_at  DateTime @default(now())
-  updated_at  DateTime @default(now())
-}
+// model Log {
+//   idlog       Int      @id
+//   idusuario   Int      @map("idusuario")
+//   accion      String   @map("accion")
+//   created_at  DateTime @map("created_at") @default(now())
+//   updated_at  DateTime @map("updated_at") @default(now())
+// }
 
-model OcupacionDefault {
-  idocupacion Int    @id
-  nombre      String @map("nombre")
-  activo      Int    @default(1)
-}
+// model Mensaje {
+//   idmensaje       Int      @id
+//   mensaje         String   @map("mensaje") @default("")
+//   idremitente     Int     @map("idremitente")
+//   idconversacion  Int     @map("idconversacion")
+//   tipo            String  @map("tipo")
+// }
 
-model Parametrizable {
-  idparametrizable Int      @id
-  clave_elector    String   @map("clave_elector")
-  curp             String   @map("curp")
-  seccion          String   @map("seccion")
-  domicilio        String   @map("domicilio")
-  exterior         String   @map("exterior")
-  celular          String   @map("celular")
-  eventos          String?  @map("eventos")
-  foto1            String   @map("foto1")
-  foto2            String   @map("foto2")
-  foto3            String   @map("foto3")
-  foto4            String   @map("foto4")
-  foto5            String   @map("foto5")
-  foto6            String   @map("foto6")
-  foto7            String   @map("foto7")
-  foto8            String   @map("foto8")
-  foto9            String   @map("foto9")
-  foto10           String   @map("foto10")
-  primer_nivel     Int      @default(1)
-  created_at       DateTime @default(now()) @updatedAt
-  updated_at       DateTime @default(now())
-}
+// model Municipio {
+//   idestado    Int    @map("idestado")
+//   estado      String @map("estado")
+//   idmunicipio Int    @id @map("idmunicipio")
+//   municipio   String @map("municipio")
+// }
 
-model Parametros1 {
-  idparametro1 Int      @id
-  nombre       String?  @map("nombre")
-  idcuenta     Int?     @map("idcuenta")
-  activo       Int      @default(1)
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now())
-}
+// model Ocupacion {
+//   idocupacion Int      @id
+//   nombre      String   @map("nombre")
+//   idcuenta    Int     @map("idcuenta")
+//   activo      Int      @default(1)
+//   created_at  DateTime @default(now())
+//   updated_at  DateTime @default(now())
+// }
 
-model Parametros2 {
-  idparametro2 Int      @id
-  nombre       String?  @map("nombre")
-  idcuenta     Int?     @map("idcuenta")
-  activo       Int      @default(1)
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now())
-}
+// model OcupacionDefault {
+//   idocupacion Int    @id
+//   nombre      String @map("nombre")
+//   activo      Int    @default(1)
+// }
 
-model Parametros3 {
-  idparametro3 Int      @id
-  nombre       String?  @map("nombre")
-  idcuenta     Int?     @map("idcuenta")
-  activo       Int      @default(1)
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now())
-}
+// model Parametrizable {
+//   idparametrizable Int      @id
+//   clave_elector    String   @map("clave_elector")
+//   curp             String   @map("curp")
+//   seccion          String   @map("seccion")
+//   domicilio        String   @map("domicilio")
+//   exterior         String   @map("exterior")
+//   celular          String   @map("celular")
+//   eventos          String  @map("eventos")
+//   foto1            String   @map("foto1")
+//   foto2            String   @map("foto2")
+//   foto3            String   @map("foto3")
+//   foto4            String   @map("foto4")
+//   foto5            String   @map("foto5")
+//   foto6            String   @map("foto6")
+//   foto7            String   @map("foto7")
+//   foto8            String   @map("foto8")
+//   foto9            String   @map("foto9")
+//   foto10           String   @map("foto10")
+//   primer_nivel     Int      @default(1)
+//   created_at       DateTime @default(now()) @updatedAt
+//   updated_at       DateTime @default(now())
+// }
 
-model Permisos {
-  idpermiso          Int      @id
-  mapas              Int      @default(1)
-  tareas             Int      @default(1)
-  reportes           Int      @default(1)
-  configuracion      Int      @default(1)
-  eventos            Int      @default(1)
-  contactos          Int      @default(1)
-  beneficiarios      Int      @default(1)
-  credencializacion Int      @default(1)
-  auditoria          Int      @default(1)
-  visualizar_niveles Int      @default(1)
-  updated_at         DateTime?
-  created_at         DateTime?
-}
+// model Parametros1 {
+//   idparametro1 Int      @id
+//   nombre       String  @map("nombre")
+//   idcuenta     Int     @map("idcuenta")
+//   activo       Int      @default(1)
+//   created_at   DateTime @default(now())
+//   updated_at   DateTime @default(now())
+// }
 
-model Seccion {
-  idseccion     Int      @id
-  idcuenta      Int      @map("idcuenta")
-  idestado      Int      @map("idestado")
-  seccion       Int      @map("seccion")
-  listado_nominal Int   @map("listado_nominal")
-  meta          Int      @map("meta")
-  created_at    DateTime @default(now()) @updatedAt
-  updated_at    DateTime?
-  activo        Int      @default(1)
-  idmunicipio   Int      @map("idmunicipio")
-} 
+// model Parametros2 {
+//   idparametro2 Int      @id
+//   nombre       String  @map("nombre")
+//   idcuenta     Int     @map("idcuenta")
+//   activo       Int      @default(1)
+//   created_at   DateTime @default(now())
+//   updated_at   DateTime @default(now())
+// }
 
-model SeccionesGeneral {
-  seccion        Int    @id
-  idestado       Int    @map("idestado")
-  estado         String @map("estado")
-  idmunicipio    Int    @map("idmunicipio")
-  distrito       Int    @map("distrito")
-  distrito_local Int    @map("distrito_local")
-}
+// model Parametros3 {
+//   idparametro3 Int      @id
+//   nombre       String  @map("nombre")
+//   idcuenta     Int     @map("idcuenta")
+//   activo       Int      @default(1)
+//   created_at   DateTime @default(now())
+//   updated_at   DateTime @default(now())
+// }
 
-model Tarea {
-  idtarea             Int      @id
-  nombre              String?  @map("nombre")
-  descripcion         String?  @map("descripcion")
-  nivel               Int?     @map("nivel")
-  idnivel1            Int?     @map("idnivel1")
-  idnivel2            Int?     @map("idnivel2")
-  idnivel3            Int?     @map("idnivel3")
-  idnivel4            Int?     @map("idnivel4")
-  idnivel5            Int?     @map("idnivel5")
-  idnivel6            Int?     @map("idnivel6")
-  idnivel7            Int?     @map("idnivel7")
-  idnivel8            Int?     @map("idnivel8")
-  fecha_inicio        DateTime? @map("fecha_inicio")
-  fecha_vencimiento   DateTime? @map("fecha_vencimiento")
-  idcuenta            Int?     @map("idcuenta")
-  created_at          DateTime? @map("created_at")
-  updated_at          DateTime? @map("updated_at")
-  created_by          Int?     @map("created_by")
-  activo              Int?     @map("activo")
-  latitud             Float?   @map("latitud")
-  longitud            Float?   @map("longitud")
-  direccion           String?  @map("direccion")
-}
+// model Permisos {
+//   idpermiso          Int      @id
+//   mapas              Int      @default(1)
+//   tareas             Int      @default(1)
+//   reportes           Int      @default(1)
+//   configuracion      Int      @default(1)
+//   eventos            Int      @default(1)
+//   contactos          Int      @default(1)
+//   beneficiarios      Int      @default(1)
+//   credencializacion Int      @default(1)
+//   auditoria          Int      @default(1)
+//   visualizar_niveles Int      @default(1)
+//   updated_at         DateTime
+//   created_at         DateTime
+// }
 
-model TareaCompletada {
-  idtarea_completada  Int      @id
-  idtarea_grupo       Int?     @map("idtarea_grupo")
-  nombre              String?  @map("nombre")
-  descripcion         String?  @map("descripcion")
-  idpersona           Int?     @map("idpersona")
-  idcuenta            Int?     @map("idcuenta")
-  foto                String?  @map("foto")
-  created_at          DateTime? @map("created_at")
-  updated_at          DateTime? @map("updated_at")
-  activo              Int?     @map("activo")
-  foto2               String?  @map("foto2")
-  foto3               String?  @map("foto3")
-  foto4               String?  @map("foto4")
-  foto5               String?  @map("foto5")
-  foto6               String?  @map("foto6")
-}
+// model Seccion {
+//   idseccion     Int      @id
+//   idcuenta      Int      @map("idcuenta")
+//   idestado      Int      @map("idestado")
+//   seccion       Int      @map("seccion")
+//   listado_nominal Int   @map("listado_nominal")
+//   meta          Int      @map("meta")
+//   created_at    DateTime @default(now()) @updatedAt
+//   updated_at    DateTime
+//   activo        Int      @default(1)
+//   idmunicipio   Int      @map("idmunicipio")
+// } 
 
-model TareaGrupo {
-  idtarea_grupo       Int      @id
-  idtarea             Int      @map("idtarea")
-  nivel               Int      @map("nivel")
-  idnivel1            Int?     @map("idnivel1")
-  idnivel2            Int?     @map("idnivel2")
-  idnivel3            Int?     @map("idnivel3")
-  idnivel4            Int?     @map("idnivel4")
-  idnivel5            Int?     @map("idnivel5")
-  idnivel6            Int?     @map("idnivel6")
-  idnivel7            Int?     @map("idnivel7")
-  idnivel8            Int?     @map("idnivel8")
-  idcuenta            Int      @map("idcuenta")
-  created_at          DateTime @default(now())
-  updated_at          DateTime @default(now())
-  activo              Int      @default(1)
-}
+// model SeccionesGeneral {
+//   seccion        Int    @id
+//   idestado       Int    @map("idestado")
+//   estado         String @map("estado")
+//   idmunicipio    Int    @map("idmunicipio")
+//   distrito       Int    @map("distrito")
+//   distrito_local Int    @map("distrito_local")
+// }
 
+// model Tarea {
+//   idtarea             Int      @id
+//   nombre              String  @map("nombre")
+//   descripcion         String  @map("descripcion")
+//   nivel               Int     @map("nivel")
+//   idnivel1            Int     @map("idnivel1")
+//   idnivel2            Int     @map("idnivel2")
+//   idnivel3            Int     @map("idnivel3")
+//   idnivel4            Int     @map("idnivel4")
+//   idnivel5            Int     @map("idnivel5")
+//   idnivel6            Int     @map("idnivel6")
+//   idnivel7            Int     @map("idnivel7")
+//   idnivel8            Int     @map("idnivel8")
+//   fecha_inicio        DateTime @map("fecha_inicio")
+//   fecha_vencimiento   DateTime @map("fecha_vencimiento")
+//   idcuenta            Int     @map("idcuenta")
+//   created_at          DateTime @map("created_at")
+//   updated_at          DateTime @map("updated_at")
+//   created_by          Int     @map("created_by")
+//   activo              Int     @map("activo")
+//   latitud             Float   @map("latitud")
+//   longitud            Float   @map("longitud")
+//   direccion           String  @map("direccion")
+// }
 
-model TipoBeneficio {
-  idtipo_beneficio    Int      @id
-  idcuenta            Int      @map("idcuenta")
-  nombre              String   @map("nombre")
-  activo              Int      @default(1)
-  created_at          DateTime @default(now())
-  updated_at          DateTime @default(now())
-}
+// model TareaCompletada {
+//   idtarea_completada  Int      @id
+//   idtarea_grupo       Int     @map("idtarea_grupo")
+//   nombre              String  @map("nombre")
+//   descripcion         String  @map("descripcion")
+//   idpersona           Int     @map("idpersona")
+//   idcuenta            Int     @map("idcuenta")
+//   foto                String  @map("foto")
+//   created_at          DateTime @map("created_at")
+//   updated_at          DateTime @map("updated_at")
+//   activo              Int     @map("activo")
+//   foto2               String  @map("foto2")
+//   foto3               String  @map("foto3")
+//   foto4               String  @map("foto4")
+//   foto5               String  @map("foto5")
+//   foto6               String  @map("foto6")
+// }
 
-model Validacion {
-  idvalidacion        Int      @id
-  nota                String?  @map("nota")
-  validacion          Int?     @map("validacion")
-  idpersona           Int?     @map("idpersona")
-  idcuenta            Int?     @map("idcuenta")
-  activo              Int?     @map("activo")
-  created_at          DateTime @default(now())
-  updated_at          DateTime @default(now())
-}
+// model TareaGrupo {
+//   idtarea_grupo       Int      @id
+//   idtarea             Int      @map("idtarea")
+//   nivel               Int      @map("nivel")
+//   idnivel1            Int     @map("idnivel1")
+//   idnivel2            Int     @map("idnivel2")
+//   idnivel3            Int     @map("idnivel3")
+//   idnivel4            Int     @map("idnivel4")
+//   idnivel5            Int     @map("idnivel5")
+//   idnivel6            Int     @map("idnivel6")
+//   idnivel7            Int     @map("idnivel7")
+//   idnivel8            Int     @map("idnivel8")
+//   idcuenta            Int      @map("idcuenta")
+//   created_at          DateTime @default(now())
+//   updated_at          DateTime @default(now())
+//   activo              Int      @default(1)
+// }
+
+// model TipoBeneficio {
+//   idtipo_beneficio    Int      @id
+//   idcuenta            Int      @map("idcuenta")
+//   nombre              String   @map("nombre")
+//   activo              Int      @default(1)
+//   created_at          DateTime @default(now())
+//   updated_at          DateTime @default(now())
+// }
+
+// model Validacion {
+//   idvalidacion        Int      @id
+//   nota                String  @map("nota")
+//   validacion          Int     @map("validacion")
+//   idpersona           Int     @map("idpersona")
+//   idcuenta            Int     @map("idcuenta")
+//   activo              Int     @map("activo")
+//   created_at          DateTime @default(now())
+//   updated_at          DateTime @default(now())
+// }
 
 // -- Ejemplo para la tabla beneficio
 // ALTER TABLE beneficio RENAME TO Beneficio;
