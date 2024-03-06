@@ -12,10 +12,8 @@ export async function POST(req: NextRequest) {
 
     try {
     
-  
 
         const { email, password } = await req.json();
-
 
 
 
@@ -36,59 +34,66 @@ export async function POST(req: NextRequest) {
                 status: 404,
             })
 
-        }
-        let isPasswordValid = false;
+        }else{
 
-        if (user && user.password) {
-            isPasswordValid = await bcrypt.compare(password, user.password);
 
-            // ... rest of your logic
-        } else {
-            // Handle the case where user or password is missing
-            isPasswordValid = false;
-        }
+            let isPasswordValid = false;
 
-        if (!isPasswordValid) {
+            if (user && user.password) {
+                isPasswordValid = await bcrypt.compare(password, user.password);
+    
+                // ... rest of your logic
+            } else {
+                // Handle the case where user or password is missing
+                isPasswordValid = false;
+            }
+    
+            if (!isPasswordValid) {
+                return NextResponse.json({
+                    message: "contrasena incorrecta"
+                }, {
+                    status: 401,
+                })
+            }
+    
+            const payload: JwtPayload = {
+                id: user.user_id,        
+                email: user.email, 
+                level: user.lever,  
+                account_fk: user.account_fk,
+                person_fk:user.person_fk,
+                visualizer:user.visualizer
+                
+            };
+            // Generar un token de autenticación
+            const token = jwt.sign(payload, "secret", {
+                expiresIn: "24h",
+            });
+    
+    
+    
+    
+    
+    
+            cookies().set({
+                name: 'token',
+                value: token,
+                httpOnly: false,
+            });
+    
+            // Enviar una respuesta exitosa con el token
             return NextResponse.json({
-                message: "contrasena incorrecta"
+                token: token
             }, {
-                status: 401,
+                status: 200,
             })
+        } 
+    
         }
-
-        const payload: JwtPayload = {
-            id: user?.id ?? 0,        
-            email: user?.email ?? '', 
-            nivel: user?.nivel ?? 0,  
-            idcuenta: user?.idcuenta ?? 0,
-            idpersona:user?.idpersona ?? 0,
-            visualizador:user?.visualizador ?? 0
-            
-        };
-        // Generar un token de autenticación
-        const token = jwt.sign(payload, "secret", {
-            expiresIn: "1h",
-        });
-
-
-
-
-
-
-        cookies().set({
-            name: 'token',
-            value: token,
-            httpOnly: false,
-        });
-
-        // Enviar una respuesta exitosa con el token
-        return NextResponse.json({
-            token: token
-        }, {
-            status: 200,
-        })
-    } catch (error) {
-        console.log(error)
-    }
-
+        
+        catch (error) {
+            console.log(error)
+        }
+        
+     
 }

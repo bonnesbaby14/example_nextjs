@@ -1,0 +1,10 @@
+-- AlterTable
+ALTER TABLE `Accounts` MODIFY `name` VARCHAR(191) NULL,
+    MODIFY `level_1` VARCHAR(191) NULL,
+    MODIFY `level_2` VARCHAR(191) NULL,
+    MODIFY `level_3` VARCHAR(191) NULL,
+    MODIFY `level_4` VARCHAR(191) NULL,
+    MODIFY `level_5` VARCHAR(191) NULL,
+    MODIFY `catalogo_1` VARCHAR(191) NULL,
+    MODIFY `catalogo_2` VARCHAR(191) NULL,
+    MODIFY `catalogo_3` VARCHAR(191) NULL;

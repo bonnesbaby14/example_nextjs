@@ -1,13 +1,14 @@
-
+"use client"
 import { getHome } from "@/utils/homeFunctions";
 import { cookies } from "next/headers";
 import React, { useState, useEffect, Suspense } from 'react';
 import { AreaData, ColorType, DeepPartial, Time, TimeChartOptions, createChart } from 'lightweight-charts';
 import { Level } from "../api/home/route";
+import { Persons } from "@prisma/client";
 
-type Person = { grupo_nivel1: string, grupo_nivel2: string, grupo_nivel3: string, grupo_nivel4: string, grupo_nivel5: string, grupo_nivel6: string, grupo_nivel7: string, grupo_nivel8: string, nombre: string, curp: string, clave_elector: string, apellido_materno:string, apellido_paterno:string }
+
 type HomeData = {
-  persons: Person[];
+  persons: Persons[];
 
   // Otros campos específicos de HomeData si los tienes
 };
@@ -15,7 +16,6 @@ type HomeData = {
 const Home = () => {
 
 
- const danos_nuevos=await getHome()
 
   const [homeData, setHomeData] = useState<HomeData>({ persons: [] });
 
@@ -23,7 +23,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/misciudadanos', {
+        const response = await fetch('/api/misciudadanos?page=107', {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });
@@ -106,7 +106,7 @@ const Home = () => {
                 {homeData.persons.map((person) => (
                   <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-center">
-                      {person.nombre}      {person.apellido_paterno} {person.apellido_materno}
+                      {person.name}      {person.last_name} {person.second_last_name}
                     </th>
                     <td className="px-6 py-4  text-center">
                       {person.clave_elector}
@@ -139,7 +139,7 @@ const Home = () => {
         <nav aria-label="Page navigation example ">
           <ul className="inline-flex -space-x-px text-sm m-5">
             <li>
-              <a href="#"  className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+              <a href="#" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
             </li>
             <li>
               <a href="#" className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">1</a>
@@ -148,7 +148,7 @@ const Home = () => {
               <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
             </li>
             <li>
-              <a href="#"  className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">3</a>
+              <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">3</a>
             </li>
             <li>
               <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>

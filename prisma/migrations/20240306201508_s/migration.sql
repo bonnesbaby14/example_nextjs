@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `Persons` MODIFY `note_1` VARCHAR(2000) NOT NULL,
+    MODIFY `note_2` VARCHAR(2000) NOT NULL;

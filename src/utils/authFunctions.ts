@@ -5,10 +5,10 @@ import { NextResponse } from "next/server";
 export  type JwtPayload = {
     id: number;
     email: string;
-    nivel: number;
-    idcuenta: number;
-    idpersona:number;
-    visualizador:number
+    level: number;
+    account_fk: number;
+    person_fk:number;
+    visualizer:number
     // Agrega aquí los demás campos según la estructura de tu payload
   };
 

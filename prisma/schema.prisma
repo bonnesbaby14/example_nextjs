@@ -11,12 +11,12 @@ datasource db {
 }
 
 model Users {
-  user_id          Int      @id @default(autoincrement())
+  user_id          Int       @id @default(autoincrement())
   name             String
   email            String
   password         String
-  person__fk       Int
-  account__fk      Int
+  person_fk        Int
+  account_fk       Int
   lever            Int
   super            Int
   first_access     Int
@@ -24,27 +24,27 @@ model Users {
   active           Int
   created_at       DateTime
   updated_at       DateTime
-  logged_at        DateTime
+  logged_at        DateTime?
   free             Int
-  leader_person_id String
+  leader_person_id String?
   visualizer       Int
-  account          Accounts @relation(fields: [account__fk], references: [account_id])
+  account          Accounts  @relation(fields: [account_fk], references: [account_id])
 }
 
 model Accounts {
-  account_id                   Int          @id @default(autoincrement())
-  name                         String
-  level_1                      String
-  level_2                      String
-  level_3                      String
-  level_4                      String
-  level_5                      String
+  account_id                   Int       @id @default(autoincrement())
+  name                         String?
+  level_1                      String?
+  level_2                      String?
+  level_3                      String?
+  level_4                      String?
+  level_5                      String?
   level_6                      String?
   level_7                      String?
   level_8                      String?
-  catalogo_1                   String
-  catalogo_2                   String
-  catalogo_3                   String
+  catalogo_1                   String?
+  catalogo_2                   String?
+  catalogo_3                   String?
   photo_1                      String?
   photo_2                      String?
   photo_3                      String?
@@ -56,55 +56,69 @@ model Accounts {
   photo_9                      String?
   photo_10                     String?
   message                      String?
-  number_levels                Int          @default(5)
-  param_nivel1_fk              Int?         @unique
-  param_nivel2_fk              Int?         @unique
-  param_nivel3_fk              Int?         @unique
-  param_nivel4_fk              Int?         @unique
-  param_nivel5_fk              Int?         @unique
-  param_nivel6_fk              Int?         @unique
-  param_nivel7_fk              Int?         @unique
-  param_nivel8_fk              Int?         @unique
-  created_by                   Int          @default(0)
+  number_levels                Int       @default(5)
+  param_nivel1_fk              Int?      @unique
+  param_nivel2_fk              Int?      @unique
+  param_nivel3_fk              Int?      @unique
+  param_nivel4_fk              Int?      @unique
+  param_nivel5_fk              Int?      @unique
+  param_nivel6_fk              Int?      @unique
+  param_nivel7_fk              Int?      @unique
+  param_nivel8_fk              Int?      @unique
+  created_by                   Int?      @default(0)
   created_at                   DateTime
-  updated_by                   Int          @default(0)
+  updated_by                   Int?      @default(0)
   updated_at                   DateTime
-  enabled                      Int          @default(1)
+  enabled                      Int       @default(1)
   block_deadline_date          DateTime?
-  active                       Int          @default(1)
-  enable_load                  Int          @default(1)
-  free                         Int          @default(0)
-  lite                         Int          @default(0)
-  stated_fk                    Int          @default(0)
-  municipality_fk              Int          @default(0)
-  permission_level1_fk         Int?         @unique
-  permission_level2_fk         Int?         @unique
-  permission_level3_fk         Int?         @unique
-  permission_level4_fk         Int?         @unique
-  permission_level5_fk         Int?         @unique
-  permission_level6_fk         Int?         @unique
-  permission_level7_fk         Int?         @unique
-  permission_level8_fk         Int?         @unique
-  leader_view                  Int          @default(0)
-  immediate_lower_registration Int          @default(0)
-  users                        Users[]
-  permission_level1            Permissions? @relation("accounts_permission1", fields: [permission_level1_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
-  permission_level2            Permissions? @relation("accounts_permission2", fields: [permission_level2_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
-  permission_level3            Permissions? @relation("accounts_permission3", fields: [permission_level3_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
-  permission_level4            Permissions? @relation("accounts_permission4", fields: [permission_level4_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
-  permission_level5            Permissions? @relation("accounts_permission5", fields: [permission_level5_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
-  permission_level6            Permissions? @relation("accounts_permission6", fields: [permission_level6_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
-  permission_level7            Permissions? @relation("accounts_permission7", fields: [permission_level7_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
-  permission_level8            Permissions? @relation("accounts_permission8", fields: [permission_level8_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  active                       Int       @default(1)
+  enable_load                  Int       @default(1)
+  free                         Int       @default(0)
+  lite                         Int       @default(0)
+  stated_fk                    Int       @default(0)
+  municipality_fk              Int       @default(0)
+  permission_level1_fk         Int?      @unique
+  permission_level2_fk         Int?      @unique
+  permission_level3_fk         Int?      @unique
+  permission_level4_fk         Int?      @unique
+  permission_level5_fk         Int?      @unique
+  permission_level6_fk         Int?      @unique
+  permission_level7_fk         Int?      @unique
+  permission_level8_fk         Int?      @unique
+  leader_view                  Int       @default(0)
+  immediate_lower_registration Int?      @default(0)
+  primary_color                String    @default("#272c33")
+  icon_color                   String    @default("#8b939b")
+  account_name                 String    @default("Registro Plus")
 
-  param_level1 Params? @relation("accounts_param1", fields: [param_nivel1_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
-  param_level2 Params? @relation("accounts_param2", fields: [param_nivel2_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
-  param_level3 Params? @relation("accounts_param3", fields: [param_nivel3_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
-  param_level4 Params? @relation("accounts_param4", fields: [param_nivel4_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
-  param_level5 Params? @relation("accounts_param5", fields: [param_nivel5_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
-  param_level6 Params? @relation("accounts_param6", fields: [param_nivel6_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
-  param_level7 Params? @relation("accounts_param7", fields: [param_nivel7_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
-  param_level8 Params? @relation("accounts_param8", fields: [param_nivel8_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  users             Users[]
+  permission_level1 Permissions? @relation("accounts_permission1", fields: [permission_level1_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level2 Permissions? @relation("accounts_permission2", fields: [permission_level2_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level3 Permissions? @relation("accounts_permission3", fields: [permission_level3_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level4 Permissions? @relation("accounts_permission4", fields: [permission_level4_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level5 Permissions? @relation("accounts_permission5", fields: [permission_level5_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level6 Permissions? @relation("accounts_permission6", fields: [permission_level6_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level7 Permissions? @relation("accounts_permission7", fields: [permission_level7_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+  permission_level8 Permissions? @relation("accounts_permission8", fields: [permission_level8_fk], references: [permission_id], onDelete: SetNull, onUpdate: Cascade)
+
+  param_level1 Params?   @relation("accounts_param1", fields: [param_nivel1_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level2 Params?   @relation("accounts_param2", fields: [param_nivel2_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level3 Params?   @relation("accounts_param3", fields: [param_nivel3_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level4 Params?   @relation("accounts_param4", fields: [param_nivel4_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level5 Params?   @relation("accounts_param5", fields: [param_nivel5_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level6 Params?   @relation("accounts_param6", fields: [param_nivel6_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level7 Params?   @relation("accounts_param7", fields: [param_nivel7_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  param_level8 Params?   @relation("accounts_param8", fields: [param_nivel8_fk], references: [param_id], onDelete: SetNull, onUpdate: Cascade)
+  persons      Persons[]
+
+  groups1 GroupsLevel1[]
+  groups2 GroupsLevel2[]
+  groups3 GroupsLevel3[]
+  groups4 GroupsLevel4[]
+  groups5 GroupsLevel5[]
+  groups6 GroupsLevel6[]
+  groups7 GroupsLevel7[]
+  groups8 GroupsLevel8[]
 }
 
 model Permissions {
@@ -163,93 +177,325 @@ model Params {
   accounts_param8 Accounts? @relation("accounts_param8")
 }
 
-// model Persona {
-//   idpersona           Int       @id
-//   idcuenta            Int
-//   apellido_paterno    String
-//   apellido_materno    String
-//   nombre              String
-//   domicilio           String
-//   exterior            String
-//   interior            String
-//   manzana_electoral   String
-//   colonia             String
-//   municipio_estado    String
-//   edad                Int
-//   fecha_nacimiento    String
-//   sexo                String
-//   localidad           String
-//   emision             String
-//   vigencia            String
-//   curp                String
-//   clave_elector       String
-//   seccion             String
-//   estado              String
-//   municipio           String
-//   email               String
-//   numero              String
-//   facebook            String
-//   twitter             String
-//   numero_local        String
-//   nota_1              String
-//   nota_2              String
-//   escolaridad         String
-//   ocupacion           String
-//   photo_1              String
-//   photo_2              String
-//   photo_3              String
-//   photo_4              String
-//   photo_5              String
-//   photo_6              String
-//   photo_7              String
-//   photo_8              String
-//   photo_9              String
-//   photo_10             String
-//   latitud             String
-//   longitud            String
-//   idnivel1            Int 
-//   idnivel2            Int
-//   idnivel3            Int
-//   idnivel4            Int
-//   idnivel5            Int
-//   idnivel6            Int
-//   idnivel7            Int
-//   idnivel8            Int
-//   created_by          Int
-//   created_at          DateTime
-//   updated_by          Int
-//   updated_at          DateTime
-//   registro_en_movil   Int      @default(0)
-//   activo              Int      @default(1)
-//   parametro1          String
-//   parametro2          String
-//   parametro3          String
-//   direccion           String
-//   SAC                 Int      @default(0)
-//   credencial          Int      @default(0)
-//   idpersona_lider     String
-//   idvalidacion        Int
-//   whatsapp            Int      @default(0)
-//   GrupoNivel1 GrupoNivel1 @relation(fields: [idnivel1], references: [idgrupo_nivel1])
-//   GrupoNivel2 GrupoNivel2 @relation(fields: [idnivel2], references: [idgrupo_nivel2])
-//   GrupoNivel3 GrupoNivel3 @relation(fields: [idnivel3], references: [idgrupo_nivel3])
-//   GrupoNivel4 GrupoNivel4 @relation(fields: [idnivel4], references: [idgrupo_nivel4])
-//   GrupoNivel5 GrupoNivel5 @relation(fields: [idnivel5], references: [idgrupo_nivel5])
-//   GrupoNivel6 GrupoNivel6 @relation(fields: [idnivel6], references: [idgrupo_nivel6])
-//   GrupoNivel7 GrupoNivel7 @relation(fields: [idnivel7], references: [idgrupo_nivel7])
-//   GrupoNivel8 GrupoNivel8 @relation(fields: [idnivel8], references: [idgrupo_nivel8])
+model Persons {
+  person_id           Int      @id @default(autoincrement())
+  account_fk          Int
+  last_name           String
+  second_last_name    String
+  name                String
+  address             String
+  ext                 String
+  int                 String
+  electoral_block     String
+  neighborhood        String
+  municipality_state  String
+  age                 Int
+  birth_date          String
+  gender              String
+  location            String
+  emision             String
+  validity            String
+  curp                String
+  clave_elector       String
+  seccion             String
+  stated              String
+  municipaly          String
+  email               String
+  phone               String
+  facebook            String
+  twitter             String
+  local_phone         String
+  note_1              String   @db.VarChar(2000)
+  note_2              String   @db.VarChar(2000)
+  scholarship         String
+  occupation          String
+  photo_1             String?
+  photo_2             String?
+  photo_3             String?
+  photo_4             String?
+  photo_5             String?
+  photo_6             String?
+  photo_7             String?
+  photo_8             String?
+  photo_9             String?
+  photo_10            String?
+  lat                 String
+  lng                 String
+  level1_fk           Int?
+  level2_fk           Int?
+  level3_fk           Int?
+  level4_fk           Int?
+  level5_fk           Int?
+  level6_fk           Int?
+  level7_fk           Int?
+  level8_fk           Int?
+  created_by          Int
+  created_at          DateTime
+  updated_by          Int
+  updated_at          DateTime
+  mobile_registration Int      @default(0)
+  active              Int      @default(1)
+  parm1               String
+  parm2               String
+  parm3               String
+  card                Int      @default(0)
+  leader_person_id    String
+  validation_id       Int
+  whatsapp            Int      @default(0)
+  seccion_python      Int?
+  account             Accounts @relation(fields: [account_fk], references: [account_id])
 
-// }
+  group1 GroupsLevel1? @relation(fields: [level1_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group2 GroupsLevel2? @relation(fields: [level2_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group3 GroupsLevel3? @relation(fields: [level3_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group4 GroupsLevel4? @relation(fields: [level4_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group5 GroupsLevel5? @relation(fields: [level5_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group6 GroupsLevel6? @relation(fields: [level6_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group7 GroupsLevel7? @relation(fields: [level7_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group8 GroupsLevel8? @relation(fields: [level8_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+}
+
+model GroupsLevel1 {
+  group_id   Int      @id @default(autoincrement())
+  account_fk Int
+  name       String
+  message    String   @db.VarChar(500)
+  active     Int      @default(1)
+  created_at DateTime @default(now())
+
+  updated_at DateTime @updatedAt
+  created_by Int
+  goal       Int      @default(0)
+
+  persons Persons[]
+  groups2 GroupsLevel2[]
+  groups3 GroupsLevel3[]
+  groups4 GroupsLevel4[]
+  groups5 GroupsLevel5[]
+  groups6 GroupsLevel6[]
+  groups7 GroupsLevel7[]
+  groups8 GroupsLevel8[]
+
+  account Accounts @relation(fields: [account_fk], references: [account_id])
+}
+
+model GroupsLevel2 {
+  group_id   Int      @id @default(autoincrement())
+  account_fk Int
+  level1_fk  Int?
+  name       String
+  message    String   @db.VarChar(500)
+  active     Int      @default(1)
+  created_at DateTime @default(now())
+
+  updated_at DateTime @updatedAt
+  created_by Int
+  goal       Int      @default(0)
+
+  persons Persons[]
+  group1  GroupsLevel1? @relation(fields: [level1_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+
+  groups3 GroupsLevel3[]
+  groups4 GroupsLevel4[]
+  groups5 GroupsLevel5[]
+  groups6 GroupsLevel6[]
+  groups7 GroupsLevel7[]
+  groups8 GroupsLevel8[]
+
+  account Accounts @relation(fields: [account_fk], references: [account_id])
+}
+
+model GroupsLevel3 {
+  group_id   Int      @id @default(autoincrement())
+  account_fk Int
+  level1_fk  Int?
+  level2_fk  Int?
+  name       String
+  message    String   @db.VarChar(500)
+  active     Int      @default(1)
+  created_at DateTime @default(now())
+
+  updated_at DateTime @updatedAt
+  created_by Int
+  goal       Int      @default(0)
+
+  persons Persons[]
+
+  groups4 GroupsLevel4[]
+  groups5 GroupsLevel5[]
+  groups6 GroupsLevel6[]
+  groups7 GroupsLevel7[]
+  groups8 GroupsLevel8[]
+
+  group1 GroupsLevel1? @relation(fields: [level1_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group2 GroupsLevel2? @relation(fields: [level2_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+
+  account Accounts @relation(fields: [account_fk], references: [account_id])
+}
+
+model GroupsLevel4 {
+  group_id   Int      @id @default(autoincrement())
+  account_fk Int
+  level1_fk  Int?
+  level2_fk  Int?
+  level3_fk  Int?
+  name       String
+  message    String   @db.VarChar(500)
+  active     Int      @default(1)
+  created_at DateTime @default(now())
+
+  updated_at DateTime @updatedAt
+  created_by Int
+  goal       Int      @default(0)
+
+  persons Persons[]
+
+  groups5 GroupsLevel5[]
+  groups6 GroupsLevel6[]
+  groups7 GroupsLevel7[]
+  groups8 GroupsLevel8[]
+
+  group1 GroupsLevel1? @relation(fields: [level1_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group2 GroupsLevel2? @relation(fields: [level2_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group3 GroupsLevel3? @relation(fields: [level3_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+
+  account Accounts @relation(fields: [account_fk], references: [account_id])
+}
+
+model GroupsLevel5 {
+  group_id   Int      @id @default(autoincrement())
+  account_fk Int
+  level1_fk  Int?
+  level2_fk  Int?
+  level3_fk  Int?
+  level4_fk  Int?
+  name       String
+  message    String   @db.VarChar(500)
+  active     Int      @default(1)
+  created_at DateTime @default(now())
+
+  updated_at DateTime @updatedAt
+  created_by Int
+  goal       Int      @default(0)
+
+  persons Persons[]
+  group1  GroupsLevel1? @relation(fields: [level1_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group2  GroupsLevel2? @relation(fields: [level2_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group3  GroupsLevel3? @relation(fields: [level3_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group4  GroupsLevel4? @relation(fields: [level4_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+
+  groups6 GroupsLevel6[]
+  groups7 GroupsLevel7[]
+  groups8 GroupsLevel8[]
+
+  account Accounts @relation(fields: [account_fk], references: [account_id])
+}
+
+model GroupsLevel6 {
+  group_id   Int      @id @default(autoincrement())
+  account_fk Int
+  level1_fk  Int?
+  level2_fk  Int?
+  level3_fk  Int?
+  level4_fk  Int?
+  level5_fk  Int?
+  name       String
+  message    String   @db.VarChar(500)
+  active     Int      @default(1)
+  created_at DateTime @default(now())
+
+  updated_at DateTime @updatedAt
+  created_by Int
+  goal       Int      @default(0)
+
+  persons Persons[]
+
+  group1 GroupsLevel1? @relation(fields: [level1_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group2 GroupsLevel2? @relation(fields: [level2_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group3 GroupsLevel3? @relation(fields: [level3_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group4 GroupsLevel4? @relation(fields: [level4_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group5 GroupsLevel5? @relation(fields: [level5_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+
+  groups7 GroupsLevel7[]
+  groups8 GroupsLevel8[]
+
+  account Accounts @relation(fields: [account_fk], references: [account_id])
+}
+
+model GroupsLevel7 {
+  group_id   Int      @id @default(autoincrement())
+  account_fk Int
+  level1_fk  Int?
+  level2_fk  Int?
+  level3_fk  Int?
+  level4_fk  Int?
+  level5_fk  Int?
+  level6_fk  Int?
+  name       String
+  message    String   @db.VarChar(500)
+  active     Int      @default(1)
+  created_at DateTime @default(now())
+
+  updated_at DateTime @updatedAt
+  created_by Int
+  goal       Int      @default(0)
+
+  persons Persons[]
+
+  group1 GroupsLevel1? @relation(fields: [level1_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group2 GroupsLevel2? @relation(fields: [level2_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group3 GroupsLevel3? @relation(fields: [level3_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group4 GroupsLevel4? @relation(fields: [level4_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group5 GroupsLevel5? @relation(fields: [level5_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group6 GroupsLevel6? @relation(fields: [level6_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+
+  groups8 GroupsLevel8[]
+
+  account Accounts @relation(fields: [account_fk], references: [account_id])
+}
+
+model GroupsLevel8 {
+  group_id   Int      @id @default(autoincrement())
+  account_fk Int
+  level1_fk  Int?
+  level2_fk  Int?
+  level3_fk  Int?
+  level4_fk  Int?
+  level5_fk  Int?
+  level6_fk  Int?
+  level7_fk  Int?
+  name       String
+  message    String   @db.VarChar(500)
+  active     Int      @default(1)
+  created_at DateTime @default(now())
+
+  updated_at DateTime @updatedAt
+  created_by Int
+  goal       Int      @default(0)
+
+  persons Persons[]
+
+  group1 GroupsLevel1? @relation(fields: [level1_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group2 GroupsLevel2? @relation(fields: [level2_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group3 GroupsLevel3? @relation(fields: [level3_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group4 GroupsLevel4? @relation(fields: [level4_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group5 GroupsLevel5? @relation(fields: [level5_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+  group6 GroupsLevel6? @relation(fields: [level6_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+
+  group7 GroupsLevel7? @relation(fields: [level7_fk], references: [group_id], onDelete: SetNull, onUpdate: Cascade)
+
+  account Accounts @relation(fields: [account_fk], references: [account_id])
+}
 
 // model Beneficio {
 //   idbeneficio      Int       @id
-//   idcuenta         Int       @map("idcuenta")
+//   account_fk         Int       
 //   idpersona        Int       @map("idpersona")
 //   idtipo_beneficio Int       @map("idtipo_beneficio")
 //   descripcion      String   @map("descripcion")
 //   cantidad         Int       @map("cantidad")
 //   archivo          String   @map("archivo")
-//   activo           Int       @default(1)
+//   active           Int       @default(1)
 //   created_at       DateTime  @default(now())
 //   updated_at       DateTime  @default(now())
 //   created_by       Int
@@ -258,62 +504,62 @@ model Params {
 
 // model Contacto {
 //   idcontacto         Int       @id
-//   nombre             String   @map("nombre")
+//   name             String   
 //   descripcion        String   @map("descripcion")
 //   estado             String   @map("estado")
 //   nivel              Int      @map("nivel")
-//   idnivel1           Int      @map("idnivel1")
-//   idnivel2           Int      @map("idnivel2")
-//   idnivel3           Int      @map("idnivel3")
-//   idnivel4           Int      @map("idnivel4")
-//   idnivel5           Int      @map("idnivel5")
-//   idnivel6           Int      @map("idnivel6")
-//   idnivel7           Int      @map("idnivel7")
-//   idnivel8           Int      @map("idnivel8")
-//   origen_idnivel1    Int      @map("origen_idnivel1")
-//   origen_idnivel2    Int      @map("origen_idnivel2")
-//   origen_idnivel3    Int      @map("origen_idnivel3")
-//   origen_idnivel4    Int      @map("origen_idnivel4")
-//   origen_idnivel5    Int      @map("origen_idnivel5")
-//   origen_idnivel6    Int      @map("origen_idnivel6")
-//   origen_idnivel7    Int      @map("origen_idnivel7")
-//   origen_idnivel8    Int      @map("origen_idnivel8")
-//   idcuenta           Int      @map("idcuenta")
-//   created_at         DateTime @map("created_at")
-//   updated_at         DateTime @map("updated_at")
-//   created_by         Int      @map("created_by")
-//   activo             Int      @default(1) @map("activo")
+//   level1_fk           Int      
+//   level2_fk           Int      
+//   level3_fk           Int      
+//   level4_fk           Int      
+//   level5_fk           Int      
+//   level6_fk           Int      
+//   level7_fk           Int      
+//   level8_fk           Int      @map("level8_fk")
+//   origen_level1_fk    Int      @map("origen_level1_fk")
+//   origen_level2_fk    Int      @map("origen_level2_fk")
+//   origen_level3_fk    Int      @map("origen_level3_fk")
+//   origen_level4_fk    Int      @map("origen_level4_fk")
+//   origen_level5_fk    Int      @map("origen_level5_fk")
+//   origen_level6_fk    Int      @map("origen_level6_fk")
+//   origen_level7_fk    Int      @map("origen_level7_fk")
+//   origen_level8_fk    Int      @map("origen_level8_fk")
+//   account_fk           Int      
+//   created_at         DateTime 
+//   updated_at         DateTime 
+//   created_by         Int      
+//   active             Int      @default(1) @map("active")
 // }
 
 // model ContactoAsignado {
 //   idcontacto_asignado      Int       @id
 //   idcontacto_grupo         Int      @map("idcontacto_grupo")
-//   nombre                   String   @map("nombre")
+//   name                   String   
 //   descripcion              String   @map("descripcion")
 //   nota                     String   @map("nota")
 //   estado                   String   @map("estado")
 //   idpersona                Int      @map("idpersona")
-//   idcuenta                 Int      @map("idcuenta")
+//   account_fk                 Int      
 //   foto                     String   @map("foto")
 //   idpersona_completada     Int      @map("idpersona_completada")
-//   created_at               DateTime @map("created_at")
-//   updated_at               DateTime @map("updated_at")
-//   activo                   Int      @default(1) @map("activo")
+//   created_at               DateTime 
+//   updated_at               DateTime 
+//   active                   Int      @default(1) @map("active")
 // }
 
 // model ContactoGrupo {
 //   idcontacto_grupo Int      @id
 //   idcontacto       Int      @map("idcontacto")
-//   idcuenta         Int      @map("idcuenta")
-//   idnivel1         Int     @map("idnivel1")
-//   idnivel2         Int     @map("idnivel2")
-//   idnivel3         Int     @map("idnivel3")
-//   idnivel4         Int     @map("idnivel4")
-//   idnivel5         Int     @map("idnivel5")
-//   idnivel6         Int     @map("idnivel6")
-//   idnivel7         Int     @map("idnivel7")
-//   idnivel8         Int     @map("idnivel8")
-//   activo           Int      @default(1)
+//   account_fk         Int      
+//   level1_fk         Int     
+//   level2_fk         Int     
+//   level3_fk         Int     
+//   level4_fk         Int     
+//   level5_fk         Int     
+//   level6_fk         Int     
+//   level7_fk         Int     
+//   level8_fk         Int     @map("level8_fk")
+//   active           Int      @default(1)
 //   nivel            Int      @map("nivel")
 //   created_at       DateTime @default(now())
 //   updated_at       DateTime @default(now())
@@ -327,37 +573,37 @@ model Params {
 
 // model Credencializacion {
 //   idcredencializacion  Int      @id
-//   idcuenta              Int      @map("idcuenta")
+//   account_fk              Int      
 //   idgrupo               Int     @map("idgrupo") @default(-1)
 //   idpersona             Int     @map("idpersona")
 //   idpersona_lider       Int     @map("idpersona_lider")
 //   nivel                 Int      @map("nivel")
-//   activo                Int      @default(1)
+//   active                Int      @default(1)
 //   created_at            DateTime @default(now())
 //   updated_at            DateTime @default(now())
-//   created_by            Int     @map("created_by")
+//   created_by            Int     
 // }
 
 // model CredencializacionPersona {
 //   idcredencializacion_persona Int   @id
 //   idpersona                  Int   @map("idpersona")
 //   idcredencializacion        Int   @map("idcredencializacion")
-//   activo                      Int   @default(1)
+//   active                      Int   @default(1)
 // }
 
 // model Escolaridad {
 //   idescolaridad Int      @id
-//   nombre        String   @map("nombre")
-//   idcuenta      Int     @map("idcuenta")
-//   activo        Int      @default(1)
-//   created_at    DateTime @map("created_at")
-//   updated_at    DateTime @map("updated_at")
+//   name        String   
+//   account_fk      Int     
+//   active        Int      @default(1)
+//   created_at    DateTime 
+//   updated_at    DateTime 
 // }
 
 // model EscolaridadDefault {
 //   idescolaridad Int    @id
-//   nombre        String @map("nombre")
-//   activo        Int    @default(1)
+//   name        String 
+//   active        Int    @default(1)
 // }
 
 // model Estado {
@@ -365,150 +611,17 @@ model Params {
 //   estado   String @map("estado")
 // }
 
-// model GrupoNivel1 {
-//   idgrupo_nivel1 Int      @id
-//   idcuenta       Int      @map("idcuenta")
-//   nombre         String  @map("nombre")
-//   mensaje        String  @map("mensaje")
-//   activo         Int      @default(1)
-//   created_at     DateTime @map("created_at")
-//   updated_at     DateTime @map("updated_at")
-//   created_by     Int     @map("created_by")
-//   meta           Int      @default(0)
-//   Persona Persona[]
-
-// }
-
-// model GrupoNivel2 {
-//   idgrupo_nivel2 Int      @id
-//   idcuenta       Int      @map("idcuenta")
-//   idnivel1       Int     @map("idnivel1")
-//   nombre         String  @map("nombre")
-//   mensaje        String  @map("mensaje")
-//   activo         Int      @default(1)
-//   created_at     DateTime @map("created_at")
-//   updated_at     DateTime @map("updated_at")
-//   created_by     Int     @map("created_by")
-//   meta           Int      @default(0)
-//   Persona Persona[]
-// }
-
-// model GrupoNivel3 {
-//   idgrupo_nivel3 Int      @id
-//   idcuenta       Int      @map("idcuenta")
-//   idnivel1       Int     @map("idnivel1")
-//   idnivel2       Int     @map("idnivel2")
-//   nombre         String  @map("nombre")
-//   mensaje        String  @map("mensaje")
-//   activo         Int      @default(1)
-//   created_at     DateTime @map("created_at")
-//   updated_at     DateTime @map("updated_at")
-//   created_by     Int     @map("created_by")
-//   meta           Int      @default(0)
-//   Persona Persona[]
-// }
-
-// model GrupoNivel4 {
-//   idgrupo_nivel4 Int      @id
-//   idcuenta       Int      @map("idcuenta")
-//   idnivel1       Int     @map("idnivel1")
-//   idnivel2       Int     @map("idnivel2")
-//   idnivel3       Int     @map("idnivel3")
-//   nombre         String  @map("nombre")
-//   mensaje        String  @map("mensaje")
-//   activo         Int      @default(1)
-//   created_at     DateTime @map("created_at")
-//   updated_at     DateTime @map("updated_at")
-//   created_by     Int     @map("created_by")
-//   meta           Int      @default(0)
-//   Persona Persona[]
-// }
-
-// model GrupoNivel5 {
-//   idgrupo_nivel5 Int      @id
-//   idcuenta       Int      @map("idcuenta")
-//   idnivel1       Int     @map("idnivel1")
-//   idnivel2       Int     @map("idnivel2")
-//   idnivel3       Int     @map("idnivel3")
-//   idnivel4       Int     @map("idnivel4")
-//   nombre         String  @map("nombre")
-//   mensaje        String  @map("mensaje")
-//   activo         Int      @default(1)
-//   created_at     DateTime @map("created_at")
-//   updated_at     DateTime @map("updated_at")
-//   created_by     Int     @map("created_by")
-//   meta           Int      @default(0)
-//   Persona Persona[]
-// }
-
-// model GrupoNivel6 {
-//   idgrupo_nivel6 Int      @id
-//   idcuenta       Int      @map("idcuenta")
-//   idnivel1       Int     @map("idnivel1")
-//   idnivel2       Int     @map("idnivel2")
-//   idnivel3       Int     @map("idnivel3")
-//   idnivel4       Int     @map("idnivel4")
-//   idnivel5       Int      @map("idnivel5")
-//   nombre         String  @map("nombre")
-//   mensaje        String  @map("mensaje")
-//   activo         Int      @default(1)
-//   created_at     DateTime @map("created_at")
-//   updated_at     DateTime @map("updated_at")
-//   created_by     Int     @map("created_by")
-//   meta           Int      @default(0)
-//   Persona Persona[]
-// }
-
-// model GrupoNivel7 {
-//   idgrupo_nivel7 Int      @id
-//   idcuenta       Int      @map("idcuenta")
-//   idnivel1       Int     @map("idnivel1")
-//   idnivel2       Int     @map("idnivel2")
-//   idnivel3       Int     @map("idnivel3")
-//   idnivel4       Int     @map("idnivel4")
-//   idnivel5       Int      @map("idnivel5")
-//   idnivel6       Int     @map("idnivel6")
-//   nombre         String  @map("nombre")
-//   mensaje        String  @map("mensaje")
-//   activo         Int      @default(1)
-//   created_at     DateTime @map("created_at")
-//   updated_at     DateTime @map("updated_at")
-//   created_by     Int     @map("created_by")
-//   meta           Int      @default(0)
-//   Persona Persona[]
-// }
-
-// model GrupoNivel8 {
-//   idgrupo_nivel8 Int      @id
-//   idcuenta       Int      @map("idcuenta")
-//   idnivel1       Int     @map("idnivel1")
-//   idnivel2       Int     @map("idnivel2")
-//   idnivel3       Int     @map("idnivel3")
-//   idnivel4       Int     @map("idnivel4")
-//   idnivel5       Int      @map("idnivel5")
-//   idnivel6       Int     @map("idnivel6")
-//   idnivel7       Int      @map("idnivel7")
-//   nombre         String  @map("nombre")
-//   mensaje        String  @map("mensaje")
-//   activo         Int      @default(1)
-//   created_at     DateTime @map("created_at")
-//   updated_at     DateTime @map("updated_at")
-//   created_by     Int     @map("created_by")
-//   meta           Int      @default(0)
-//   Persona Persona[]
-// }
-
 // model Log {
 //   idlog       Int      @id
 //   idusuario   Int      @map("idusuario")
 //   accion      String   @map("accion")
-//   created_at  DateTime @map("created_at") @default(now())
-//   updated_at  DateTime @map("updated_at") @default(now())
+//   created_at  DateTime  @default(now())
+//   updated_at  DateTime  @default(now())
 // }
 
 // model Mensaje {
-//   idmensaje       Int      @id
-//   mensaje         String   @map("mensaje") @default("")
+//   idmessage       Int      @id
+//   message         String    @default("")
 //   idremitente     Int     @map("idremitente")
 //   idconversacion  Int     @map("idconversacion")
 //   tipo            String  @map("tipo")
@@ -523,17 +636,17 @@ model Params {
 
 // model Ocupacion {
 //   idocupacion Int      @id
-//   nombre      String   @map("nombre")
-//   idcuenta    Int     @map("idcuenta")
-//   activo      Int      @default(1)
+//   name      String   
+//   account_fk    Int     
+//   active      Int      @default(1)
 //   created_at  DateTime @default(now())
 //   updated_at  DateTime @default(now())
 // }
 
 // model OcupacionDefault {
 //   idocupacion Int    @id
-//   nombre      String @map("nombre")
-//   activo      Int    @default(1)
+//   name      String 
+//   active      Int    @default(1)
 // }
 
 // model Parametrizable {
@@ -562,27 +675,27 @@ model Params {
 
 // model Parametros1 {
 //   idparametro1 Int      @id
-//   nombre       String  @map("nombre")
-//   idcuenta     Int     @map("idcuenta")
-//   activo       Int      @default(1)
+//   name       String  
+//   account_fk     Int     
+//   active       Int      @default(1)
 //   created_at   DateTime @default(now())
 //   updated_at   DateTime @default(now())
 // }
 
 // model Parametros2 {
 //   idparametro2 Int      @id
-//   nombre       String  @map("nombre")
-//   idcuenta     Int     @map("idcuenta")
-//   activo       Int      @default(1)
+//   name       String  
+//   account_fk     Int     
+//   active       Int      @default(1)
 //   created_at   DateTime @default(now())
 //   updated_at   DateTime @default(now())
 // }
 
 // model Parametros3 {
 //   idparametro3 Int      @id
-//   nombre       String  @map("nombre")
-//   idcuenta     Int     @map("idcuenta")
-//   activo       Int      @default(1)
+//   name       String  
+//   account_fk     Int     
+//   active       Int      @default(1)
 //   created_at   DateTime @default(now())
 //   updated_at   DateTime @default(now())
 // }
@@ -605,14 +718,14 @@ model Params {
 
 // model Seccion {
 //   idseccion     Int      @id
-//   idcuenta      Int      @map("idcuenta")
+//   account_fk      Int      
 //   idestado      Int      @map("idestado")
 //   seccion       Int      @map("seccion")
 //   listado_nominal Int   @map("listado_nominal")
-//   meta          Int      @map("meta")
+//   goal          Int      @map("goal")
 //   created_at    DateTime @default(now()) @updatedAt
 //   updated_at    DateTime
-//   activo        Int      @default(1)
+//   active        Int      @default(1)
 //   idmunicipio   Int      @map("idmunicipio")
 // } 
 
@@ -627,24 +740,24 @@ model Params {
 
 // model Tarea {
 //   idtarea             Int      @id
-//   nombre              String  @map("nombre")
+//   name              String  
 //   descripcion         String  @map("descripcion")
 //   nivel               Int     @map("nivel")
-//   idnivel1            Int     @map("idnivel1")
-//   idnivel2            Int     @map("idnivel2")
-//   idnivel3            Int     @map("idnivel3")
-//   idnivel4            Int     @map("idnivel4")
-//   idnivel5            Int     @map("idnivel5")
-//   idnivel6            Int     @map("idnivel6")
-//   idnivel7            Int     @map("idnivel7")
-//   idnivel8            Int     @map("idnivel8")
+//   level1_fk            Int     
+//   level2_fk            Int     
+//   level3_fk            Int     
+//   level4_fk            Int     
+//   level5_fk            Int     
+//   level6_fk            Int     
+//   level7_fk            Int     
+//   level8_fk            Int     @map("level8_fk")
 //   fecha_inicio        DateTime @map("fecha_inicio")
 //   fecha_vencimiento   DateTime @map("fecha_vencimiento")
-//   idcuenta            Int     @map("idcuenta")
-//   created_at          DateTime @map("created_at")
-//   updated_at          DateTime @map("updated_at")
-//   created_by          Int     @map("created_by")
-//   activo              Int     @map("activo")
+//   account_fk            Int     
+//   created_at          DateTime 
+//   updated_at          DateTime 
+//   created_by          Int     
+//   active              Int     @map("active")
 //   latitud             Float   @map("latitud")
 //   longitud            Float   @map("longitud")
 //   direccion           String  @map("direccion")
@@ -653,14 +766,14 @@ model Params {
 // model TareaCompletada {
 //   idtarea_completada  Int      @id
 //   idtarea_grupo       Int     @map("idtarea_grupo")
-//   nombre              String  @map("nombre")
+//   name              String  
 //   descripcion         String  @map("descripcion")
 //   idpersona           Int     @map("idpersona")
-//   idcuenta            Int     @map("idcuenta")
+//   account_fk            Int     
 //   foto                String  @map("foto")
-//   created_at          DateTime @map("created_at")
-//   updated_at          DateTime @map("updated_at")
-//   activo              Int     @map("activo")
+//   created_at          DateTime 
+//   updated_at          DateTime 
+//   active              Int     @map("active")
 //   foto2               String  @map("foto2")
 //   foto3               String  @map("foto3")
 //   foto4               String  @map("foto4")
@@ -672,25 +785,25 @@ model Params {
 //   idtarea_grupo       Int      @id
 //   idtarea             Int      @map("idtarea")
 //   nivel               Int      @map("nivel")
-//   idnivel1            Int     @map("idnivel1")
-//   idnivel2            Int     @map("idnivel2")
-//   idnivel3            Int     @map("idnivel3")
-//   idnivel4            Int     @map("idnivel4")
-//   idnivel5            Int     @map("idnivel5")
-//   idnivel6            Int     @map("idnivel6")
-//   idnivel7            Int     @map("idnivel7")
-//   idnivel8            Int     @map("idnivel8")
-//   idcuenta            Int      @map("idcuenta")
+//   level1_fk            Int     
+//   level2_fk            Int     
+//   level3_fk            Int     
+//   level4_fk            Int     
+//   level5_fk            Int     
+//   level6_fk            Int     
+//   level7_fk            Int     
+//   level8_fk            Int     @map("level8_fk")
+//   account_fk            Int      
 //   created_at          DateTime @default(now())
 //   updated_at          DateTime @default(now())
-//   activo              Int      @default(1)
+//   active              Int      @default(1)
 // }
 
 // model TipoBeneficio {
 //   idtipo_beneficio    Int      @id
-//   idcuenta            Int      @map("idcuenta")
-//   nombre              String   @map("nombre")
-//   activo              Int      @default(1)
+//   account_fk            Int      
+//   name              String   
+//   active              Int      @default(1)
 //   created_at          DateTime @default(now())
 //   updated_at          DateTime @default(now())
 // }
@@ -700,8 +813,8 @@ model Params {
 //   nota                String  @map("nota")
 //   validacion          Int     @map("validacion")
 //   idpersona           Int     @map("idpersona")
-//   idcuenta            Int     @map("idcuenta")
-//   activo              Int     @map("activo")
+//   account_fk            Int     
+//   active              Int     @map("active")
 //   created_at          DateTime @default(now())
 //   updated_at          DateTime @default(now())
 // }
@@ -729,7 +842,7 @@ model Params {
 // ALTER TABLE grupo_nivel7 RENAME TO GrupoNivel7;
 // ALTER TABLE grupo_nivel8 RENAME TO GrupoNivel8;
 // ALTER TABLE logs RENAME TO Logs;
-// ALTER TABLE mensaje RENAME TO Mensaje;
+// ALTER TABLE message RENAME TO Mensaje;
 // ALTER TABLE migrations RENAME TO Migrations;
 // ALTER TABLE municipios RENAME TO Municipios;
 // ALTER TABLE oauth_access_tokens RENAME TO OauthAccessTokens;
