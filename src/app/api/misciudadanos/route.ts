@@ -98,10 +98,12 @@ const query=""
   
   
 
-
+  const total_page = Math.ceil(total / per_page)
 
 return NextResponse.json({
-  data:{persons: citizens
+  data:{persons: citizens,
+    total_page:total_page
+
 
 
   } ,

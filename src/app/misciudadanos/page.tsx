@@ -12,44 +12,48 @@ type HomeData = {
 
   // Otros campos específicos de HomeData si los tienes
 };
-
+var page=1
+var total_pages=0
 const Home = () => {
 
 
+ 
 
   const [homeData, setHomeData] = useState<HomeData>({ persons: [] });
+  const fetchData = async () => {
+    try {
+      const response = await fetch('/api/misciudadanos?page='+page, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (!response.ok) {
+        // Manejar errores de la petición
+        console.error(`Error: ${response.status}`);
+        return;
+      }
+
+      const data = await response.json();
+      const fetchedCounters = data.data;
+      total_pages=fetchedCounters.total_page
+
+
+      console.log(data)
+
+
+      setHomeData({ persons: fetchedCounters.persons });
+
+
+
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/misciudadanos?page=107', {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        });
-
-        if (!response.ok) {
-          // Manejar errores de la petición
-          console.error(`Error: ${response.status}`);
-          return;
-        }
-
-        const data = await response.json();
-        const fetchedCounters = data.data;
-
-
-        console.log(data)
-
-
-        setHomeData({ persons: fetchedCounters.persons });
-
-
-
-
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+    
 
     fetchData();  // Llamar a la función de obtención de datos
 
@@ -58,7 +62,16 @@ const Home = () => {
 
 
 
-
+  function addPage(){
+    
+    page+=1
+    console.log(page)
+    fetchData()
+  }
+  function removePage(){
+    page-=1
+    fetchData()
+  }
 
 
 
@@ -139,25 +152,14 @@ const Home = () => {
         <nav aria-label="Page navigation example ">
           <ul className="inline-flex -space-x-px text-sm m-5">
             <li>
-              <a href="#" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+              <a href="#" onClick={removePage} className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
             </li>
             <li>
-              <a href="#" className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">1</a>
+              <a href="#" className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">{page} - {total_pages}  </a>
             </li>
+        
             <li>
-              <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-            </li>
-            <li>
-              <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">3</a>
-            </li>
-            <li>
-              <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-            </li>
-            <li>
-              <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-            </li>
-            <li>
-              <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+              <a href="#" onClick={addPage} className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
             </li>
           </ul>
         </nav>
