@@ -4,7 +4,7 @@ import getUser, { JwtPayload } from "@/utils/authFunctions";
 import { use } from "react";
 
 
-import { STATUS } from "@/utils/constants";
+import { Status } from "@/utils/constants";
 
 const prisma=new PrismaClient();
 
@@ -25,9 +25,8 @@ export interface GraphicItem{
 
 export async function GET(req: NextRequest) {
   
-  
 
-  console.log("aqui andamos back 2")
+  const type_request=req.nextUrl.searchParams.get("type");
 
 const  user : JwtPayload = await getUser() as JwtPayload;
 
@@ -40,8 +39,6 @@ const maxLevelAccount=parseInt((account?.number_levels.toString()??"0"));
 console.log(maxLevelAccount)
 
 var  levels: Level[]=[];
-
-
 
 
   const person = await prisma.persons.findFirst({
@@ -71,6 +68,7 @@ var  levels: Level[]=[];
     ];
 
 
+    if(type_request=="count"){
 
 for (let i = 1; i <= maxLevelAccount; i++) {
 
@@ -97,7 +95,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-            active: STATUS.ACTIVE,
+            active: Status.active,
             level1_fk: { not: null },
             level2_fk: null,
             level3_fk:null,
@@ -135,7 +133,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-            active: STATUS.ACTIVE,
+            active: Status.active,
           
             level1_fk: {not:null},
             level2_fk: {not:null},
@@ -156,7 +154,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: {not:null},
             level3_fk:null,
@@ -193,7 +191,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: {not:null},
             level2_fk: {not:null},
             level3_fk: {not:null},
@@ -213,7 +211,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: {not:null},
             level3_fk:{not:null},
@@ -235,7 +233,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:{not:null},
@@ -273,7 +271,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: {not:null},
             level2_fk: {not:null},
             level3_fk: {not:null},
@@ -293,7 +291,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: {not:null},
             level3_fk:{not:null},
@@ -315,7 +313,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:{not:null},
@@ -337,7 +335,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -375,7 +373,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: {not:null},
             level2_fk: {not:null},
             level3_fk: {not:null},
@@ -395,7 +393,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: {not:null},
             level3_fk:{not:null},
@@ -417,7 +415,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:{not:null},
@@ -439,7 +437,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -461,7 +459,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -498,7 +496,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: {not:null},
             level2_fk: {not:null},
             level3_fk: {not:null},
@@ -518,7 +516,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: {not:null},
             level3_fk:{not:null},
@@ -540,7 +538,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:{not:null},
@@ -562,7 +560,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-            active: STATUS.ACTIVE,
+            active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -584,7 +582,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -606,7 +604,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -644,7 +642,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: {not:null},
             level2_fk: {not:null},
             level3_fk: {not:null},
@@ -664,7 +662,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: {not:null},
             level3_fk:{not:null},
@@ -686,7 +684,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:{not:null},
@@ -708,7 +706,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -730,7 +728,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -752,7 +750,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -774,7 +772,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -811,7 +809,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: {not:null},
             level2_fk: {not:null},
             level3_fk: {not:null},
@@ -831,7 +829,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: {not:null},
             level3_fk:{not:null},
@@ -853,7 +851,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:{not:null},
@@ -875,7 +873,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -897,7 +895,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -919,7 +917,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -941,7 +939,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -963,7 +961,7 @@ for (let i = 1; i <= maxLevelAccount; i++) {
         level.persons = await prisma.persons.count({
           where: {
             account_fk: user.account_fk,
-                    active: STATUS.ACTIVE,
+                    active: Status.active,
             level1_fk: person.level1_fk,
             level2_fk: person.level2_fk,
             level3_fk:person.level3_fk,
@@ -997,70 +995,86 @@ for (let i = 1; i <= maxLevelAccount; i++) {
   levels.push(level);
 }
 
+return NextResponse.json({
+  data:{
+ 
+    counters:levels
 
+  } ,
+  
 
-const date = new Date();
-date.setMonth(date.getMonth() - 5);
-
-const data_persons = await prisma.persons.findMany({
-  select: {
-    person_id: true,
-    created_at: true,
-    // Otras propiedades si es necesario
-  },
-  where: {
-    created_at: { gte: date },
-    account_fk: user.account_fk,
-            active: STATUS.ACTIVE,
-    leader_person_id: {
-              ...((account?.leader_view ?? 0 )  > 0 ||  (user.visualizer > 0 && user.level> 0)) && {
-                contains: "," + user.person_fk + ",",
-              },
-     },
-    AND: [
-      user.level > 0 ? { level1_fk: person.level1_fk } : {},
-      user.level > 1 ? { level2_fk: person.level2_fk } : {},
-      user.level > 2 ? { level3_fk: person.level3_fk } : {},
-      user.level > 3 ? { level4_fk: person.level4_fk } : {},
-      user.level > 4 ? { level5_fk: person.level5_fk } : {},
-      user.level > 5 ? { level6_fk: person.level6_fk } : {},
-      user.level > 6 ? { level7_fk: person.level7_fk } : {},
-      user.level > 7 ? { level8_fk: person.level8_fk } : {},
-    ],
-  },
+}, {
+  status: 200,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
-// Procesar los resultados en tu código
-const data_graphic: Record<string, number> = {};
 
-data_persons.forEach((person:any) => {
-const date_without_time = person.created_at?.toISOString().split('T')[0];
+}else{
 
-if (date_without_time) {
-data_graphic[date_without_time] = (data_graphic[date_without_time] || 0) + 1;
+  const date = new Date();
+  date.setMonth(date.getMonth() - 5);
+  
+  const data_persons = await prisma.persons.findMany({
+    select: {
+      person_id: true,
+      created_at: true,
+      // Otras propiedades si es necesario
+    },
+    where: {
+      created_at: { gte: date },
+      account_fk: user.account_fk,
+              active: Status.active,
+      leader_person_id: {
+                ...((account?.leader_view ?? 0 )  > 0 ||  (user.visualizer > 0 && user.level> 0)) && {
+                  contains: "," + user.person_fk + ",",
+                },
+       },
+      AND: [
+        user.level > 0 ? { level1_fk: person.level1_fk } : {},
+        user.level > 1 ? { level2_fk: person.level2_fk } : {},
+        user.level > 2 ? { level3_fk: person.level3_fk } : {},
+        user.level > 3 ? { level4_fk: person.level4_fk } : {},
+        user.level > 4 ? { level5_fk: person.level5_fk } : {},
+        user.level > 5 ? { level6_fk: person.level6_fk } : {},
+        user.level > 6 ? { level7_fk: person.level7_fk } : {},
+        user.level > 7 ? { level8_fk: person.level8_fk } : {},
+      ],
+    },
+  });
+  
+  // Procesar los resultados en tu código
+  const data_graphic: Record<string, number> = {};
+  
+  data_persons.forEach((person:any) => {
+  const date_without_time = person.created_at?.toISOString().split('T')[0];
+  
+  if (date_without_time) {
+  data_graphic[date_without_time] = (data_graphic[date_without_time] || 0) + 1;
+  }
+  });
+
+  return NextResponse.json({
+    data:{
+      graphic:data_graphic,
+
+  
+    } ,
+    
+  
+  }, {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
 }
-});
 
 
 
 
 
-console.log("se me hizo una petcion")
 
-
-    return NextResponse.json({
-      data:{
-        graphic:data_graphic,
-        counters:levels
-    
-      } ,
-      
-    
-    }, {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
     
 }

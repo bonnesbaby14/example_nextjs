@@ -70,6 +70,7 @@ const query=""
 
 
   console.log("haciendo la consulta")
+
   const [citizens, total] = await prisma.$transaction([
     prisma.persons.findMany({
       skip,
@@ -93,10 +94,6 @@ const query=""
     }),
   ]);
 
-  console.log(citizens,total)
-
-  
-  
 
   const total_page = Math.ceil(total / per_page)
 

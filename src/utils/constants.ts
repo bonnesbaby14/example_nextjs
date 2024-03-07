@@ -1,8 +1,8 @@
 
-export const STATUS  ={
+export const Status  = {
 
-    ACTIVE:1,
-    NO_ACTIVE:0
+    active:1,
+    no_active:0
 
 
 } 

@@ -12,17 +12,17 @@ type HomeData = {
 
   // Otros campos específicos de HomeData si los tienes
 };
-var page=1
-var total_pages=0
+var page = 1
+var total_pages = 0
 const Home = () => {
 
 
- 
+
 
   const [homeData, setHomeData] = useState<HomeData>({ persons: [] });
   const fetchData = async () => {
     try {
-      const response = await fetch('/api/misciudadanos?page='+page, {
+      const response = await fetch('/api/misciudadanos?page=' + page, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       });
@@ -35,7 +35,7 @@ const Home = () => {
 
       const data = await response.json();
       const fetchedCounters = data.data;
-      total_pages=fetchedCounters.total_page
+      total_pages = fetchedCounters.total_page
 
 
       console.log(data)
@@ -53,7 +53,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    
+
 
     fetchData();  // Llamar a la función de obtención de datos
 
@@ -62,15 +62,20 @@ const Home = () => {
 
 
 
-  function addPage(){
-    
-    page+=1
-    console.log(page)
-    fetchData()
+  function addPage() {
+    if (page < total_pages) {
+
+      page += 1
+      fetchData()
+    }
+
   }
-  function removePage(){
-    page-=1
-    fetchData()
+  function removePage() {
+    if (page > 1) {
+      page -= 1
+      fetchData()
+    }
+
   }
 
 
@@ -155,9 +160,9 @@ const Home = () => {
               <a href="#" onClick={removePage} className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
             </li>
             <li>
-              <a href="#" className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">{page} - {total_pages}  </a>
+              <a href="#" className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">{page} / {total_pages}  </a>
             </li>
-        
+
             <li>
               <a href="#" onClick={addPage} className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
             </li>
