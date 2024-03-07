@@ -1,54 +1,54 @@
+"use client"
+import React, { FC, useEffect, useState } from 'react';
 
-import React, { FC, useEffect } from 'react';
+const GridCounterDashboard: FC =  () => {
+
+    const [counters, setCounters]=useState<any>(null)
 
 
-const GridCounterDashboard: FC = async () => {
+    
 
+      useEffect(()  => {
 
+        const fetchData = async () => {
 
-    const fetchData = async () => {
-
-        console.log("entre al fecth")
-        try {
-            const response = await fetch('/api/home?type=count', {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            });
-
-            if (!response.ok) {
-                // Manejar errores de la petición
-                console.error(`Error: ${response.status}`);
-                return;
+            console.log("entre al fecth")
+            try {
+                const response = await fetch('/api/home?type=count', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+    
+                if (!response.ok) {
+                    // Manejar errores de la petición
+                    console.error(`Error: ${response.status}`);
+                    return;
+                }
+    
+                const data = await response.json();
+                const fetchedCounters = data.data;
+    
+                 const counters = fetchedCounters.counters;
+                //   setCounterData({counters:counters})
+    
+                setCounters(counters)
+    
+    
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return []
             }
+        };
+         // Llamar a la función de obtención de datos
+         fetchData();
 
-            const data = await response.json();
-            const fetchedCounters = data.data;
-
-            const counters = fetchedCounters.counters;
-            //   setCounterData({counters:counters})
-
-
+      }, []);
+   
 
 
-            return counters
-
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            return []
-        }
-    };
-
-    //   useEffect(()  => {
-
-    //      // Llamar a la función de obtención de datos
-
-    //   }, []);
-    const counters = await fetchData();
 
 
-    console.log("ya voy a dibujar")
-
-    return (
+    return  (
         <div className="grid grid-cols-4 gap-x-6 gap-y-6 flex-wrap ">
             {counters.map((counter:any) => (
                 <div className="flex items-center space-x-20 pl-6 h-28 rounded bg-gray-50 dark:bg-gray-800" key={counter.level}>
