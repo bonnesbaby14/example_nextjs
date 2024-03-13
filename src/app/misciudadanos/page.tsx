@@ -1,5 +1,5 @@
 "use client"
-import { getHome } from "@/utils/homeFunctions";
+// import { getHome } from "@/utils/homeFunctions";
 import { cookies } from "next/headers";
 import React, { useState, useEffect, Suspense } from 'react';
 import { AreaData, ColorType, DeepPartial, Time, TimeChartOptions, createChart } from 'lightweight-charts';
@@ -122,7 +122,7 @@ const Home = () => {
 
 
                 {homeData.persons.map((person) => (
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <tr key={person.curp} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  text-center">
                       {person.name}      {person.last_name} {person.second_last_name}
                     </th>
